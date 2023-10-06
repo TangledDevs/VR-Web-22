@@ -4,15 +4,27 @@ import { PiStudent, PiSuitcaseSimple } from "react-icons/pi";
 
 export const links = {
   admin: [
-    { icon: <LuLayoutDashboard size={24} />, text: "Home" },
-    { icon: <PiStudent size={24} />, text: "Students" },
-    { icon: <GrUserManager size={24} />, text: "Coordinators" },
-    { icon: <PiSuitcaseSimple size={24} />, text: "Placements" },
+    { icon: <LuLayoutDashboard size={24} />, text: "Home", href: "dashboard" },
+    { icon: <PiStudent size={24} />, text: "Students", href: "students" },
+    {
+      icon: <GrUserManager size={24} />,
+      text: "Coordinators",
+      href: "coordinators",
+    },
+    {
+      icon: <PiSuitcaseSimple size={24} />,
+      text: "Placements",
+      href: "placements",
+    },
   ],
   coordinator: [
-    { icon: <LuLayoutDashboard size={24} />, text: "Home" },
-    { icon: <PiStudent size={24} />, text: "Students" },
-    { icon: <PiSuitcaseSimple size={24} />, text: "Placements" },
+    { icon: <LuLayoutDashboard size={24} />, text: "Home", href: "dashboard" },
+    { icon: <PiStudent size={24} />, text: "Students", href: "students" },
+    {
+      icon: <PiSuitcaseSimple size={24} />,
+      text: "Placements",
+      href: "placements",
+    },
   ],
   //   student: [],
 };
