@@ -27,7 +27,7 @@ router
   .get(getAllStudents)
   .post(addStudent)
   .patch(updateStudentDetails);
-router.route("students/upload").post(uploadStudents);
+router.route("/students/upload").post(uploadStudents);
 router
   .route("/coordinators")
   .get(getAllCoordinators)

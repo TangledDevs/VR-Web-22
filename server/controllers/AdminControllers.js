@@ -6,6 +6,7 @@ import Admin from "../models/Admin.js";
 import PlacementResult from "../models/PlacementResult.js";
 import Student from "../models/Student.js";
 import Coordinator from "../models/Coordinator.js";
+import xlsx from "xlsx";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
