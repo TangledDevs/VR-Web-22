@@ -17,26 +17,25 @@ import {
 } from "../controllers/adminControllers.js";
 const router = express.Router();
 
-router.route("login").post(login);
+router.route("/login").post(login);
 
 // router.use(isAuthenticated);
 // router.use(authorizeRoles(["admin"]));
 
 router
-  .route("students")
+  .route("/students")
   .get(getAllStudents)
   .post(addStudent)
   .patch(updateStudentDetails);
-router.route("students/upload").post(uploadStudents);
-router.route("/coordinators").get(getAllCoordinators).post(addCoordinator);
-
+router.route("/students/upload").post(uploadStudents);
 router
-  .route("/coordinators/:coordinatorId")
+  .route("/coordinators")
+  .get(getAllCoordinators)
   .patch(updateCoordinatorDetails)
-  .delete(deleteCoordinator);
-  
-router.route("placements").get(getAllPlacementResults).post(addPlacement);
-router.route("placements/uploadResults").post(uploadPlacementResults);
-router.route("new").post(addAdmin);
+  .delete(deleteCoordinator)
+  .post(addCoordinator);
+router.route("/placements").get(getAllPlacementResults).post(addPlacement);
+router.route("/placements/uploadResults").post(uploadPlacementResults);
+router.route("/new").post(addAdmin);
 
 export default router;

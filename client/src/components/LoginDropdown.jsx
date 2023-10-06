@@ -6,8 +6,11 @@ import {
   Avatar,
   Typography,
 } from "@material-tailwind/react";
+import { logout } from "../redux/authSlice";
+import { useDispatch } from "react-redux";
 
 export default function ProfileMenu() {
+  const dispatch = useDispatch();
   return (
     <Menu>
       <MenuHandler>
@@ -64,7 +67,10 @@ export default function ProfileMenu() {
           </Typography>
         </MenuItem>
         <hr className="my-2 border-blue-gray-50" />
-        <MenuItem className="flex items-center gap-2 ">
+        <MenuItem
+          className="flex items-center gap-2"
+          onClick={() => dispatch(logout())}
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

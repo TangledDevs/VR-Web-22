@@ -15,7 +15,6 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use(ErrorMiddleWare);
 
 export const upload = multer({
   storage: multer.memoryStorage(),
@@ -31,6 +30,8 @@ app.use("/api/student", upload.single("profileImage"), studentRoutes);
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Team Tangled Devs " });
 });
+
+app.use(ErrorMiddleWare);
 
 const start = async () => {
   try {
