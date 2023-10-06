@@ -88,8 +88,10 @@ export const login = async (req, res) => {
 // };
 
 export const getAllPlacementResults = async (req, res) => {
-  const placementResults = await PlacementResult.find({}).populate({path:"student"});
-  console.log(placementResults)
+  const placementResults = await PlacementResult.find({}).populate({
+    path: "student",
+  });
+  console.log(placementResults);
   return res.status(StatusCodes.OK).json({
     message: "Placement Results data sent",
     count: placementResults.length,
@@ -117,8 +119,8 @@ export const uploadPlacementResults = async (req, res) => {
 };
 
 export const addPlacement = async (req, res) => {
-  const { studentId, company, ctc, placementDate, position } = req.body;
-  if (!studentId || !company || !ctc || !placementDate || !position) {
+  const { student, company, ctc, placementDate, position } = req.body;
+  if (!student || !company || !ctc || !placementDate || !position) {
     throw new Error("Fill all details", StatusCodes.BAD_REQUEST);
   }
   const newPlacement = await PlacementResult.create(req.body);

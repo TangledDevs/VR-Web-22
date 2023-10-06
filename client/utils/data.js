@@ -7,6 +7,7 @@ export const data = [
     position: "Full Stack Developer",
     placement_date: "2023-05-15",
     year_of_passing: 2023,
+    department: "CSE",
   },
   {
     student_id: "1002",
@@ -16,6 +17,7 @@ export const data = [
     position: "Data Analyst",
     placement_date: "2023-06-02",
     year_of_passing: 2023,
+    department: "CSE",
   },
   {
     student_id: "1003",
@@ -25,6 +27,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2020-05-28",
     year_of_passing: 2020,
+    department: "CSE",
   },
   {
     student_id: "1004",
@@ -34,6 +37,7 @@ export const data = [
     position: "Cybersecurity Engineer",
     placement_date: "2020-06-10",
     year_of_passing: 2020,
+    department: "CSE",
   },
   {
     student_id: "1005",
@@ -43,6 +47,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2020-05-20",
     year_of_passing: 2020,
+    department: "CSE",
   },
   {
     student_id: "1006",
@@ -52,6 +57,7 @@ export const data = [
     position: "Educational Software Developer",
     placement_date: "2020-06-05",
     year_of_passing: 2020,
+    department: "CSE",
   },
   {
     student_id: "1007",
@@ -61,6 +67,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2019-05-17",
     year_of_passing: 2019,
+    department: "CSE",
   },
   {
     student_id: "1008",
@@ -70,6 +77,7 @@ export const data = [
     position: "Biomedical Researcher",
     placement_date: "2019-06-12",
     year_of_passing: 2019,
+    department: "CSE",
   },
   {
     student_id: "1009",
@@ -79,6 +87,7 @@ export const data = [
     position: "AI Researcher",
     placement_date: "2019-05-30",
     year_of_passing: 2019,
+    department: "CSE",
   },
   {
     student_id: "1010",
@@ -88,6 +97,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2019-06-08",
     year_of_passing: 2019,
+    department: "CSE",
   },
   {
     student_id: "1011",
@@ -97,6 +107,7 @@ export const data = [
     position: "Astronautical Engineer",
     placement_date: "2023-05-25",
     year_of_passing: 2023,
+    department: "CSE",
   },
   {
     student_id: "1012",
@@ -106,6 +117,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2023-06-15",
     year_of_passing: 2023,
+    department: "CSE",
   },
   {
     student_id: "1013",
@@ -115,6 +127,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2023-05-23",
     year_of_passing: 2023,
+    department: "CSE",
   },
   {
     student_id: "1014",
@@ -124,6 +137,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2023-06-18",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1015",
@@ -133,6 +147,7 @@ export const data = [
     position: "Medical Researcher",
     placement_date: "2023-05-19",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1016",
@@ -142,6 +157,7 @@ export const data = [
     position: "Cybersecurity Analyst",
     placement_date: "2023-06-20",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1017",
@@ -151,6 +167,7 @@ export const data = [
     position: "Data Scientist",
     placement_date: "2023-05-22",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1018",
@@ -160,6 +177,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2023-06-25",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1019",
@@ -169,6 +187,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2023-05-24",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1020",
@@ -178,6 +197,7 @@ export const data = [
     position: "Software Architect",
     placement_date: "2023-06-30",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1021",
@@ -187,6 +207,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2023-05-27",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1022",
@@ -196,6 +217,7 @@ export const data = [
     position: "Biomedical Researcher",
     placement_date: "2023-07-02",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1023",
@@ -205,6 +227,7 @@ export const data = [
     position: "AI Researcher",
     placement_date: "2023-06-01",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1024",
@@ -214,6 +237,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2023-07-05",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1025",
@@ -223,6 +247,7 @@ export const data = [
     position: "Astronautical Engineer",
     placement_date: "2023-05-26",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1026",
@@ -232,6 +257,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2023-07-10",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1027",
@@ -241,6 +267,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2023-05-29",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1028",
@@ -250,6 +277,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2023-07-15",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1029",
@@ -259,6 +287,7 @@ export const data = [
     position: "Medical Researcher",
     placement_date: "2023-05-21",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1030",
@@ -268,6 +297,7 @@ export const data = [
     position: "Cybersecurity Analyst",
     placement_date: "2023-07-20",
     year_of_passing: 2023,
+    department: "IT",
   },
   {
     student_id: "1001",
@@ -277,6 +307,7 @@ export const data = [
     position: "Full Stack Developer",
     placement_date: "2018-05-15",
     year_of_passing: 2018,
+    department: "IT",
   },
   {
     student_id: "1002",
@@ -286,6 +317,7 @@ export const data = [
     position: "Data Analyst",
     placement_date: "2018-06-02",
     year_of_passing: 2018,
+    department: "IT",
   },
   {
     student_id: "1003",
@@ -295,6 +327,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2018-05-28",
     year_of_passing: 2018,
+    department: "IT",
   },
   {
     student_id: "1004",
@@ -304,6 +337,7 @@ export const data = [
     position: "Cybersecurity Engineer",
     placement_date: "2018-06-10",
     year_of_passing: 2018,
+    department: "IT",
   },
   {
     student_id: "1005",
@@ -313,6 +347,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2018-05-20",
     year_of_passing: 2018,
+    department: "IT",
   },
   {
     student_id: "1006",
@@ -322,6 +357,7 @@ export const data = [
     position: "Educational Software Developer",
     placement_date: "2020-06-05",
     year_of_passing: 2020,
+    department: "IT",
   },
   {
     student_id: "1007",
@@ -331,6 +367,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2020-05-17",
     year_of_passing: 2020,
+    department: "IT",
   },
   {
     student_id: "1008",
@@ -340,6 +377,7 @@ export const data = [
     position: "Biomedical Researcher",
     placement_date: "2020-06-12",
     year_of_passing: 2020,
+    department: "IT",
   },
   {
     student_id: "1009",
@@ -349,6 +387,7 @@ export const data = [
     position: "AI Researcher",
     placement_date: "2020-05-30",
     year_of_passing: 2020,
+    department: "IT",
   },
   {
     student_id: "1010",
@@ -358,6 +397,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2020-06-08",
     year_of_passing: 2020,
+    department: "IT",
   },
   {
     student_id: "1011",
@@ -367,6 +407,7 @@ export const data = [
     position: "Astronautical Engineer",
     placement_date: "2020-05-25",
     year_of_passing: 2020,
+    department: "MECH",
   },
   {
     student_id: "1012",
@@ -376,6 +417,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2020-06-15",
     year_of_passing: 2020,
+    department: "MECH",
   },
   {
     student_id: "1013",
@@ -385,6 +427,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2020-05-23",
     year_of_passing: 2020,
+    department: "MECH",
   },
   {
     student_id: "1014",
@@ -394,6 +437,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2022-06-18",
     year_of_passing: 2022,
+    department: "MECH",
   },
   {
     student_id: "1015",
@@ -403,6 +447,7 @@ export const data = [
     position: "Medical Researcher",
     placement_date: "2022-05-19",
     year_of_passing: 2022,
+    department: "MECH",
   },
   {
     student_id: "1016",
@@ -412,6 +457,7 @@ export const data = [
     position: "Cybersecurity Analyst",
     placement_date: "2022-06-20",
     year_of_passing: 2022,
+    department: "MECH",
   },
   {
     student_id: "1017",
@@ -421,6 +467,7 @@ export const data = [
     position: "Data Scientist",
     placement_date: "2022-05-22",
     year_of_passing: 2022,
+    department: "CIVIL",
   },
   {
     student_id: "1018",
@@ -430,6 +477,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2022-06-25",
     year_of_passing: 2022,
+    department: "CIVIL",
   },
   {
     student_id: "1019",
@@ -439,6 +487,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2022-05-24",
     year_of_passing: 2022,
+    department: "CIVIL",
   },
   {
     student_id: "1020",
@@ -448,6 +497,7 @@ export const data = [
     position: "Software Architect",
     placement_date: "2022-06-30",
     year_of_passing: 2022,
+    department: "CIVIL",
   },
   {
     student_id: "1021",
@@ -457,6 +507,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2022-05-27",
     year_of_passing: 2022,
+    department: "CIVIL",
   },
   {
     student_id: "1022",
@@ -466,6 +517,7 @@ export const data = [
     position: "Biomedical Researcher",
     placement_date: "2022-07-02",
     year_of_passing: 2022,
+    department: "CIVIL",
   },
   {
     student_id: "1023",
@@ -475,6 +527,7 @@ export const data = [
     position: "AI Researcher",
     placement_date: "2022-06-01",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1024",
@@ -484,6 +537,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2022-07-05",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1025",
@@ -493,6 +547,7 @@ export const data = [
     position: "Astronautical Engineer",
     placement_date: "2022-05-26",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1026",
@@ -502,6 +557,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2022-07-10",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1027",
@@ -511,6 +567,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2022-05-29",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1028",
@@ -520,6 +577,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2022-07-15",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1029",
@@ -529,6 +587,7 @@ export const data = [
     position: "Medical Researcher",
     placement_date: "2022-05-21",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1030",
@@ -538,6 +597,7 @@ export const data = [
     position: "Cybersecurity Analyst",
     placement_date: "2022-07-20",
     year_of_passing: 2022,
+    department: "EEE",
   },
   {
     student_id: "1001",
@@ -547,6 +607,7 @@ export const data = [
     position: "Full Stack Developer",
     placement_date: "2023-05-15",
     year_of_passing: 2023,
+    department: "EEE",
   },
   {
     student_id: "1002",
@@ -556,6 +617,7 @@ export const data = [
     position: "Data Analyst",
     placement_date: "2023-06-02",
     year_of_passing: 2023,
+    department: "ECE",
   },
   {
     student_id: "1003",
@@ -565,6 +627,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2023-05-28",
     year_of_passing: 2023,
+    department: "ECE",
   },
   {
     student_id: "1004",
@@ -574,6 +637,7 @@ export const data = [
     position: "Cybersecurity Engineer",
     placement_date: "2019-06-10",
     year_of_passing: 2019,
+    department: "ECE",
   },
   {
     student_id: "1005",
@@ -583,6 +647,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2019-05-20",
     year_of_passing: 2019,
+    department: "ECE",
   },
   {
     student_id: "1006",
@@ -592,6 +657,7 @@ export const data = [
     position: "Educational Software Developer",
     placement_date: "2023-06-05",
     year_of_passing: 2023,
+    department: "ECE",
   },
   {
     student_id: "1007",
@@ -601,6 +667,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2023-05-17",
     year_of_passing: 2023,
+    department: "ECE",
   },
   {
     student_id: "1008",
@@ -610,6 +677,7 @@ export const data = [
     position: "Biomedical Researcher",
     placement_date: "2023-06-12",
     year_of_passing: 2023,
+    department: "ECE",
   },
   {
     student_id: "1009",
@@ -619,6 +687,7 @@ export const data = [
     position: "AI Researcher",
     placement_date: "2020-05-30",
     year_of_passing: 2020,
+    department: "ECE",
   },
   {
     student_id: "1010",
@@ -628,6 +697,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2020-06-08",
     year_of_passing: 2020,
+    department: "ECE",
   },
   {
     student_id: "1011",
@@ -637,6 +707,7 @@ export const data = [
     position: "Astronautical Engineer",
     placement_date: "2018-05-25",
     year_of_passing: 2018,
+    department: "ECE",
   },
   {
     student_id: "1012",
@@ -646,6 +717,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2019-06-15",
     year_of_passing: 2019,
+    department: "ECE",
   },
   {
     student_id: "1013",
@@ -655,6 +727,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2019-05-23",
     year_of_passing: 2019,
+    department: "ECE",
   },
   {
     student_id: "1014",
@@ -664,6 +737,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2019-06-18",
     year_of_passing: 2019,
+    department: "ECE",
   },
   {
     student_id: "1015",
@@ -673,6 +747,7 @@ export const data = [
     position: "Medical Researcher",
     placement_date: "2021-05-19",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1016",
@@ -682,6 +757,7 @@ export const data = [
     position: "Cybersecurity Analyst",
     placement_date: "2021-06-20",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1017",
@@ -691,6 +767,7 @@ export const data = [
     position: "Data Scientist",
     placement_date: "2021-05-22",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1018",
@@ -700,6 +777,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2021-06-25",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1019",
@@ -709,6 +787,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2021-05-24",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1020",
@@ -718,6 +797,7 @@ export const data = [
     position: "Software Architect",
     placement_date: "2021-06-30",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1021",
@@ -727,6 +807,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2021-05-27",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1022",
@@ -736,6 +817,7 @@ export const data = [
     position: "Biomedical Researcher",
     placement_date: "2021-07-02",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1023",
@@ -745,6 +827,7 @@ export const data = [
     position: "AI Researcher",
     placement_date: "2021-06-01",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1024",
@@ -754,6 +837,7 @@ export const data = [
     position: "Automotive Engineer",
     placement_date: "2021-07-05",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1025",
@@ -763,6 +847,7 @@ export const data = [
     position: "Astronautical Engineer",
     placement_date: "2021-05-26",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1026",
@@ -772,6 +857,7 @@ export const data = [
     position: "Financial Analyst",
     placement_date: "2021-07-10",
     year_of_passing: 2021,
+    department: "CSE",
   },
   {
     student_id: "1027",
@@ -781,6 +867,7 @@ export const data = [
     position: "Software Engineer",
     placement_date: "2021-05-29",
     year_of_passing: 2021,
+    department: "AIML",
   },
   {
     student_id: "1028",
@@ -790,6 +877,7 @@ export const data = [
     position: "Environmental Analyst",
     placement_date: "2021-07-15",
     year_of_passing: 2021,
+    department: "AIML",
   },
   {
     student_id: "1029",
@@ -799,6 +887,7 @@ export const data = [
     position: "Medical Researcher",
     placement_date: "2021-05-21",
     year_of_passing: 2021,
+    department: "AIML",
   },
   {
     student_id: "1030",
@@ -808,5 +897,6 @@ export const data = [
     position: "Cybersecurity Analyst",
     placement_date: "2021-07-20",
     year_of_passing: 2021,
+    department: "AIML",
   },
 ];

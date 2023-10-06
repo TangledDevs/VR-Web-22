@@ -81,16 +81,13 @@ export const updateProfile = createAsyncThunk(
 export const uploadOfferLetter = createAsyncThunk(
   "/api/student/placements(post)",
   async (payload, { rejectWithValue }) => {
+    console.log(payload);
     try {
-      const response = await axios.post(
-        `/api/student/placements`,
-        { payload },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.post(`/api/student/placements`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       return response.data;
     } catch (error) {

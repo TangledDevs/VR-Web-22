@@ -48,19 +48,18 @@ export const Student = () => {
           />
         </div>
         <div className="flex flex-col gap-3 justify-center">
-          <p>{JSON.stringify(student)}</p>
-          <p>Name : {student?.name}</p>
-          <p>Roll No : 20BQ1A05P2</p>
-          <p>Email : gnanachandra2003@gmail.com</p>
-          <p>Department : CSE</p>
-          <p>Contact : 9666498405</p>
+          <p>Name: {student?.name}</p>
+          <p>Roll No : {student?.rollNo}</p>
+          <p>Email : {student?.email}</p>
+          <p>Department : {student?.department}</p>
+          <p>Contact : {student?.contact}</p>
         </div>
         <div className="flex flex-col gap-3 justify-center">
-          <p>Date of Birth : 30-06-2003</p>
-          <p>Passout Year : 2024</p>
-          <p>Placed : YES</p>
-          <p>Gender : MALE</p>
-          <p>Address : Nehru Nagar 3rd line</p>
+          <p>Date of Birth : {student?.dateOfBirth}</p>
+          <p>Passout Year : {student?.passoutYear}</p>
+          <p>Placed : {student?.isPlaced ? "Yes" : "No"}</p>
+          <p>Gender : {student?.gender}</p>
+          <p>Address : {student?.address}</p>
         </div>
       </div>
       <div className="mt-10">
