@@ -1,4 +1,4 @@
-import { Bar, Line, Pie } from "react-chartjs-2";
+import { Bar, Line } from "react-chartjs-2";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 import { data } from "../../utils/data";
@@ -89,18 +89,15 @@ const GraphsContainer = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-x-8 gap-y-16">
-      <section className="w-full">
+    <div className="grid grid-cols-2 gap-8">
+      <section className="w-full bg-white rounded-md shadow-md p-4">
         <Line data={lineChartData} />
       </section>
-      <section className="w-full">
+      <section className="w-full bg-white rounded-md shadow-md p-4">
         <Bar data={barChartData} />
       </section>
-      <section className="w-full h-full">
+      <section className="w-full bg-white rounded-md shadow-md p-4">
         <Bar data={pieChartData} />
-      </section>
-      <section className="w-full">
-        <Pie data={pieChartData} />
       </section>
     </div>
   );
