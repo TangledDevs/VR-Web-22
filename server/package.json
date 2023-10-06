@@ -14,7 +14,8 @@
     "mongoose": "^7.5.4",
     "nodemailer": "^6.9.5",
     "nodemon": "^3.0.1",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "dev": "nodemon server.js",
