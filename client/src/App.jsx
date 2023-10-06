@@ -7,12 +7,12 @@ import { Layout as StudentLayout } from "./pages/student/Layout";
 import Coordinators from "./components/coordinators/Coordinators";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DashboardTable from "./components/DashboardTable";
 import LoginForm from "./components/LoginForm";
 import Placements from "./components/placements/Placements";
 import { Student } from "./components/students/Student";
 import CoordinatorDashboard from "./pages/coordinator/CoordinatorDashboard";
 import OfferLetters from "./pages/coordinator/OfferLetters";
+import Students from "./components/students/Students";
 
 function App() {
   return (
@@ -25,7 +25,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="home" element={<AdminDashboard />} />
           <Route path="coordinators" element={<Coordinators />} />
-          <Route path="students" element={<DashboardTable />} />
+          <Route path="students" element={<Students />} />
           <Route path="placements" element={<Placements />} />
 
           {/* <Route path="/companies" element={<Companies />} /> */}
@@ -36,8 +36,10 @@ function App() {
 
         {/* Co-ordinator routes */}
         <Route path="/coordinator" element={<CoordinatorLayout />}>
+          <Route path="students" element={<Students />} />
           <Route path="home" element={<CoordinatorDashboard />} />
           <Route path="offerletters" element={<OfferLetters />} />
+          <Route path="placements" element={<Placements />} />
         </Route>
 
         {/* Student routes */}

@@ -13,15 +13,13 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { departments } from "../../constants";
 import { Combobox } from "@headlessui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getAllStudents } from "../../redux/adminSlice";
 
 const AddPlacement = ({ open, handleOpen }) => {
   const { students } = useSelector((store) => store.admin);
   const dispatch = useDispatch();
-  if (!students) {
-    dispatch();
-  }
   const [query, setQuery] = useState("");
   const [selectedPerson, setSelectedPerson] = useState("");
 
@@ -29,7 +27,7 @@ const AddPlacement = ({ open, handleOpen }) => {
     query === ""
       ? students
       : students.filter((student) => {
-          return student.toLowerCase().includes(query.toLowerCase());
+          return student.mail.toLowerCase().includes(query.toLowerCase());
         });
 
   const form = useForm();
@@ -46,6 +44,12 @@ const AddPlacement = ({ open, handleOpen }) => {
   const handleAddPlacement = async (data) => {
     console.log(data);
   };
+  useEffect(() => {
+    const getStudents = async () => {
+      await dispatch(getAllStudents());
+    };
+    getStudents();
+  }, []);
   return (
     <Dialog size="xs" open={open} handler={handleOpen}>
       <DialogHeader className="flex items-center justify-between">
@@ -60,6 +64,7 @@ const AddPlacement = ({ open, handleOpen }) => {
           <Combobox value={selectedPerson} onChange={setSelectedPerson}>
             <Combobox.Input
               onChange={(event) => setQuery(event.target.value)}
+              className="p-2 border border-gray-500 rounded-lg"
             />
             <Combobox.Options>
               {filteredPeople.map((person) => (

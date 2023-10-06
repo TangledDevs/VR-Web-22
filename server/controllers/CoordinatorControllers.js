@@ -24,7 +24,7 @@ export const login = async (req, res) => {
   return res.status(StatusCodes.OK).json({
     message: "Login successful",
     accessToken: accessToken,
-    user:coordinator,
+    user: coordinator,
   });
 };
 
@@ -86,8 +86,8 @@ export const login = async (req, res) => {
 // };
 
 export const getAllStudents = async (req, res) => {
-  const coordinatorId = req.userId;
-  const coordinator = await Coordinator.findById({ coordinatorId });
+  console.log(req.userId);
+  const coordinator = await Coordinator.findById(req.userId);
   const students = await Student.find({ department: coordinator.department })
     // .populate({
     //   path: "notifications",
@@ -178,13 +178,13 @@ export const validateOfferLetter = async (req, res) => {
 
 export const getMyDeptPlacementResults = async (req, res) => {
   const coordinatorId = req.userId;
-  const coordinator = await Coordinator.findById({ coordinatorId });
+  const coordinator = await Coordinator.findById(coordinatorId);
   const deptPlacements = await PlacementResult.find({
     department: coordinator.department,
   });
   return res.status(StatusCodes.OK).json({
     message: "Placement Results data sent",
     count: deptPlacements.length,
-    deptPlacements,
+    placements: deptPlacements,
   });
 };
