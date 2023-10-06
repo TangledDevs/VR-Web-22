@@ -1,10 +1,8 @@
-export const handleCoordinatorSearch = (query,department, data) => {
-  if(department !== "ALL")
-  {
-    data = data.filter((item)=>item.department === department);
+export const handleCoordinatorSearch = (query, department, data) => {
+  if (department !== "ALL") {
+    data = data.filter((item) => item.department === department);
   }
-  if(!query)
-  {
+  if (!query) {
     return data;
   }
   const filteredData = data.filter((item) =>
@@ -23,4 +21,29 @@ export const handleStudentSearch = (query, data) => {
       item.rollNo.toLowerCase().includes(query.toLowerCase())
   );
   return filteredData;
+};
+
+export const handlePlacementSearch = (
+  query,
+  passoutYear,
+  department,
+  placements
+) => {
+  if (passoutYear) {
+    placements = placements?.filter(
+      (placement) => placement?.student?.passoutYear === passoutYear
+    );
+  }
+  if (department) {
+    placements = placements?.filter(
+      (placement) => placement?.student?.department === department
+    );
+  }
+  if (!query) {
+    return placements;
+  }
+  placements = placements?.filter((placement) =>
+    placement?.student?.name?.toLowerCase().includes(query.toLowerCase())
+  );
+  return placements;
 };

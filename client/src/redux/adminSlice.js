@@ -12,7 +12,7 @@ const initialState = {
   isLoading: true,
   students: [],
   coordinators: [],
-  coordinator : {},
+  coordinator: {},
   student: {},
 };
 
@@ -25,7 +25,7 @@ export const getAllCoordinators = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
-      
+
       return response.data;
     } catch (error) {
       if (!error?.response) {
@@ -58,13 +58,17 @@ export const addCoordinator = createAsyncThunk(
 export const updateCoordinatorDetails = createAsyncThunk(
   "/api/admin/coordinator(patch)",
   async (payload, { rejectWithValue }) => {
-    console.log("Payload: ",payload)
+    console.log("Payload: ", payload);
     try {
-      const response = await axios.patch(`/api/admin/coordinators/${payload._id}`, payload, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.patch(
+        `/api/admin/coordinators/${payload._id}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       if (!error?.response) {
@@ -78,9 +82,32 @@ export const updateCoordinatorDetails = createAsyncThunk(
 export const deleteCoordinator = createAsyncThunk(
   "/api/admin/coordinator(delete)",
   async (payload, { rejectWithValue }) => {
-    console.log(payload)
+    console.log(payload);
     try {
-      const response = await axios.delete(`/api/admin/coordinators/${payload.id}`, payload, {
+      const response = await axios.delete(
+        `/api/admin/coordinators/${payload.id}`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
+export const getPlacements = createAsyncThunk(
+  "/api/admin/placements(get)",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(`/api/admin/placements`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -98,13 +125,14 @@ const adminSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
-    setCoordinator : (state, { payload }) => {
-      console.log("ljksdfg")
-      const coordinator = state.coordinators.find((item,index)=>item._id == payload.id)
+    setCoordinator: (state, { payload }) => {
+      console.log("ljksdfg");
+      const coordinator = state.coordinators.find(
+        (item, index) => item._id == payload.id
+      );
       state.coordinator = coordinator;
-      console.log(coordinator)
-    }
-    
+      console.log(coordinator);
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getAllCoordinators.pending, (state) => {
@@ -132,7 +160,6 @@ const adminSlice = createSlice({
       state.isLoading = false;
       toast.error(payload.message || "Unable to add coordinator");
     });
-    
 
     builder.addCase(updateCoordinatorDetails.pending, (state) => {
       state.isLoading = true;
@@ -150,7 +177,6 @@ const adminSlice = createSlice({
       toast.error(payload.message || "Unable to update coordinator");
     });
 
-
     builder.addCase(deleteCoordinator.pending, (state) => {
       state.isLoading = true;
     });
@@ -163,8 +189,21 @@ const adminSlice = createSlice({
       state.isLoading = false;
       toast.error(payload.message || "Unable to delete coordinator");
     });
+
+    builder.addCase(getPlacements.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getPlacements.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.placements = payload.placementResults;
+      toast.success(payload.message);
+    });
+    builder.addCase(getPlacements.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message || "Unable to get placement details");
+    });
   },
 });
 
-export const {setCoordinator} = adminSlice.actions;
+export const { setCoordinator } = adminSlice.actions;
 export default adminSlice.reducer;

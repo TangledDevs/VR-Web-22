@@ -88,7 +88,8 @@ export const login = async (req, res) => {
 // };
 
 export const getAllPlacementResults = async (req, res) => {
-  const placementResults = await PlacementResult.find({});
+  const placementResults = await PlacementResult.find({}).populate({path:"student"});
+  console.log(placementResults)
   return res.status(StatusCodes.OK).json({
     message: "Placement Results data sent",
     count: placementResults.length,

@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import { Layout as AdminLayout } from "./pages/admin/Layout";
-import AdminDashboard from "./components/AdminDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 import { Layout as CoordinatorLayout } from "./pages/coordinator/Layout";
 import { Layout as StudentLayout } from "./pages/student/Layout";
 import Coordinators from "./components/coordinators/Coordinators";
@@ -11,6 +11,8 @@ import DashboardTable from "./components/DashboardTable";
 import LoginForm from "./components/LoginForm";
 import Placements from "./components/placements/Placements";
 import { Student } from "./components/students/Student";
+import CoordinatorDashboard from "./pages/coordinator/CoordinatorDashboard";
+import OfferLetters from "./pages/coordinator/OfferLetters";
 
 function App() {
   return (
@@ -21,8 +23,8 @@ function App() {
 
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
+          <Route path="home" element={<AdminDashboard />} />
           <Route path="coordinators" element={<Coordinators />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="students" element={<DashboardTable />} />
           <Route path="placements" element={<Placements />} />
 
@@ -33,7 +35,10 @@ function App() {
         </Route>
 
         {/* Co-ordinator routes */}
-        <Route path="/coordinator" element={<CoordinatorLayout />}></Route>
+        <Route path="/coordinator" element={<CoordinatorLayout />}>
+          <Route path="home" element={<CoordinatorDashboard />} />
+          <Route path="offerletters" element={<OfferLetters />} />
+        </Route>
 
         {/* Student routes */}
         <Route path="/student" element={<StudentLayout />}>

@@ -14,46 +14,12 @@ import { useEffect, useState } from "react";
 import CoordinatorsTable from "./CoordinatorsTable";
 import { handleCoordinatorSearch } from "../../../utils/search";
 import { departments } from "../../constants";
-import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCoordinators } from "../../redux/adminSlice";
-const TABLE_ROWS = [
-  {
-    image:
-      "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "John Doe",
-    email: "john.doe@example.com",
-    contact: "555-555-5555",
-    department: "Marketing",
-  },
-  {
-    image:
-      "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "Jane Smith",
-    email: "jane.smith@example.com",
-    contact: "555-555-5556",
-    department: "Sales",
-  },
-  {
-    image:
-      "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "Bob Johnson",
-    email: "bob.johnson@example.com",
-    contact: "555-555-5557",
-    department: "Finance",
-  },
-  {
-    image:
-      "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-3.jpg",
-    name: "Mary Davis",
-    email: "mary.davis@example.com",
-    contact: "555-555-5558",
-    department: "HR",
-  },
-];
+import Loading from "../Loading";
 
 export default function Coordinators() {
-  const { coordinators } = useSelector((state) => state["admin"]);
+  const { coordinators, isLoading } = useSelector((state) => state["admin"]);
   const dispatch = useDispatch();
   const [department, setDepartment] = useState("ALL");
   const [open, setOpen] = useState(false);
@@ -63,10 +29,13 @@ export default function Coordinators() {
   };
   useEffect(() => {
     const fetchCoordinators = async () => {
-      const response = await dispatch(getAllCoordinators());
+      await dispatch(getAllCoordinators());
     };
     fetchCoordinators();
   }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Card className="h-full w-full shadow-none">
       <CardHeader floated={false} shadow={false} className="rounded-none">
@@ -91,12 +60,7 @@ export default function Coordinators() {
       <CardBody className="shadow-none px-0">
         <div className="flex flex-col items-center justify-between gap-4 md:flex-row px-4">
           <div className="w-7">
-            <Select
-              label="Filter By Dept"
-              
-              onChange={(e) => setDepartment(e)}
-            >
-              
+            <Select label="Filter By Dept" onChange={(e) => setDepartment(e)}>
               {departments.map((dept, index) => {
                 return (
                   <Option value={dept} key={index}>
