@@ -16,11 +16,11 @@ export const login = async (req, res) => {
   if (!student) {
     throw new Error("User Not found", StatusCodes.NOT_FOUND);
   }
-  const match = await Student.comparePassword(password);
+  const match = await student.comparePassword(password);
   if (!match) {
     throw new Error("Invalid credentials", StatusCodes.UNAUTHORIZED);
   }
-  const accessToken = await Student.createAccessToken();
+  const accessToken = await student.createAccessToken();
   return res.status(StatusCodes.OK).json({
     message: "Login successful",
     accessToken: accessToken,

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Sidebar = ({ role }) => {
   return (
-    <aside className="w-24 h-screen fixed px-2 bg-white border-r border-r-blue-gray-50">
+    <aside className="hidden lg:block w-24 h-screen fixed px-2 bg-white border-r border-r-blue-gray-50">
       {links[role].map((link, index) => (
         <Link
           key={index}

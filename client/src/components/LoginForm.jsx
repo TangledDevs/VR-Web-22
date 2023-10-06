@@ -26,7 +26,7 @@ export default function LoginForm() {
     }
     const response = await dispatch(login(formData));
     if (response.meta.requestStatus === "fulfilled") {
-      navigate(`/${userType}/dashboard`, { replace: true });
+      navigate(`/${userType}/home`, { replace: true });
     }
   };
 
