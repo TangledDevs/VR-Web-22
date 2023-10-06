@@ -10,6 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 import DashboardTable from "./components/DashboardTable";
 import LoginForm from "./components/LoginForm";
 import Placements from "./components/placements/Placements";
+import { Student } from "./components/students/Student";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="students" element={<DashboardTable />} />
           <Route path="placements" element={<Placements />} />
+          <Route path="student" element={<Student />} />
           {/* <Route path="/companies" element={<Companies />} /> */}
           {/* <Route path="/coordinators" element={<Coordinators />} /> */}
           {/* <Route path="/reports" element={<Reports />} /> */}
