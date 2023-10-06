@@ -20,7 +20,7 @@
   },
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "npm run start"
+    "start": "node server.js"
   },
   "type": "module"
 }
