@@ -14,11 +14,14 @@ import { useForm } from "react-hook-form";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { addCoordinator } from "../../redux/adminSlice";
 
 const AddCoordinator = ({ open, handleOpen }) => {
+  const dispatch = useDispatch();
   const [department, setDepartment] = useState("");
   const { register, handleSubmit, formState, reset, clearErrors } = useForm();
-  const { errors,isSubmitSuccessful} = formState;
+  const { errors, isSubmitSuccessful } = formState;
   const errorMessages = Object.values(errors);
   if (errorMessages.length !== 0) {
     toast.error(errorMessages[0]?.message);
@@ -26,11 +29,15 @@ const AddCoordinator = ({ open, handleOpen }) => {
   }
   const addNewCoordinator = async (data) => {
     data.department = department;
-    console.log(data);
+    const response = await dispatch(addCoordinator(data));
+    if (response.meta.requestStatus === "fulfilled") {
+      handleOpen();
+    } else {
+      toast.error(response?.error?.data?.message);
+    }
   };
-  if(isSubmitSuccessful)
-  {
-    reset()
+  if (isSubmitSuccessful) {
+    reset();
   }
   return (
     <Dialog open={open} handler={handleOpen} size="xs">
@@ -75,6 +82,28 @@ const AddCoordinator = ({ open, handleOpen }) => {
               required: {
                 value: true,
                 message: "Email is required !",
+              },
+            })}
+          />
+          <Input
+            label="Coordinator Contact"
+            type="text"
+            required
+            {...register("contact", {
+              required: {
+                value: true,
+                message: "Coordinator contact is required !",
+              },
+              validate: {
+                isvalid: (fieldValue) => {
+                  return Number(fieldValue) || "Enter a valid contact number";
+                },
+                isValidLength: (fieldValue) => {
+                  return (
+                    fieldValue.length === 10 ||
+                    "Contact number must be 10 digits"
+                  );
+                },
               },
             })}
           />
