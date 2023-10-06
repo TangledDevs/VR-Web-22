@@ -1,5 +1,8 @@
 import { Card, Typography, CardBody, Chip } from "@material-tailwind/react";
 import Upload from "./Upload";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { getMyPlacementResults } from "../../redux/studentSlice";
 
 const TABLE_HEAD = [
   "Company",
@@ -48,6 +51,18 @@ const TABLE_ROWS = [
   },
 ];
 export default function OfferLetters() {
+  const dispatch = useDispatch();
+  const { placements, isLoading } = useSelector((state) => state.student);
+  const [uploadedOfferLetters, setUploadedOfferLetters] = useState([]);
+
+  console.log(uploadedOfferLetters);
+
+  useEffect(() => {
+    dispatch(getMyPlacementResults());
+    setUploadedOfferLetters(
+      placements.filter((placement) => placement.offerLetter)
+    );
+  }, []);
   return (
     <Card className="h-full w-full">
       <CardBody className="overflow-auto px-0">
@@ -71,7 +86,7 @@ export default function OfferLetters() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
+            {uploadedOfferLetters.map(
               ({ company, role, placementDate, ctc, status }, index) => (
                 <tr key={index} className="even:bg-blue-gray-50/50">
                   <td className="p-4">

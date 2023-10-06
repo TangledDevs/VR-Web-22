@@ -1,14 +1,10 @@
-import {
-  Button,
-  Card,
-  Typography,
-  Dialog,
-  DialogHeader,
-  DialogBody,
-  DialogFooter,
-} from "@material-tailwind/react";
+import { Card, Typography } from "@material-tailwind/react";
 // import { useState } from "react";
 import Upload from "./Upload";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { getMyPlacementResults } from "../../redux/studentSlice";
 
 const TABLE_HEAD = ["Company", "Role", "Ctc", "Placement Date", "Action"];
 
@@ -46,8 +42,16 @@ const TABLE_ROWS = [
 ];
 
 export default function PlacementOffers() {
+  const dispatch = useDispatch();
+  const { placements, isLoading } = useSelector((state) => state.student);
+
+  useEffect(() => {
+    dispatch(getMyPlacementResults());
+  }, []);
+
   // const [open, setOpen] = useState(false);
 
+  if (isLoading) return <h1>Loading...</h1>;
   // const handleOpen = () => setOpen(!open);
   return (
     <Card className="h-full w-full overflow-auto">
@@ -71,7 +75,7 @@ export default function PlacementOffers() {
           </tr>
         </thead>
         <tbody>
-          {TABLE_ROWS.map(({ company, role, placementDate, ctc }, index) => (
+          {placements.map(({ _id, company, role, placementDate, ctc }, index) => (
             <tr key={index} className="even:bg-blue-gray-50/50">
               <td className="p-4">
                 <Typography
@@ -110,7 +114,7 @@ export default function PlacementOffers() {
                 </Typography>
               </td>
               <td className="p-4">
-                <Upload />
+                <Upload id={_id} />
               </td>
             </tr>
           ))}
