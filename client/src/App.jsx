@@ -8,6 +8,7 @@ import Coordinators from "./components/coordinators/Coordinators";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import DashboardTable from "./components/DashboardTable";
+import LoginForm from "./components/LoginForm";
 import Placements from "./components/placements/Placements";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<LoginForm/>} />
 
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
