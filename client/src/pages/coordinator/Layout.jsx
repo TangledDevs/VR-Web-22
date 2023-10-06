@@ -1,4 +1,4 @@
-// import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { useNavigate } from "react-router";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
@@ -20,8 +20,7 @@ export const Layout = () => {
       <div className="pt-20">
         <Sidebar role={"coordinator"} />
         <main className="lg:ml-24 p-4">
-          {/* <Outlet /> */}
-          Hello
+          <Outlet />
         </main>
       </div>
     </>

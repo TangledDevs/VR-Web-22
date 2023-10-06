@@ -11,6 +11,8 @@ import DashboardTable from "./components/DashboardTable";
 import LoginForm from "./components/LoginForm";
 import Placements from "./components/placements/Placements";
 import { Student } from "./components/students/Student";
+import CoordinatorDashboard from "./pages/coordinator/CoordinatorDashboard";
+import OfferLetters from "./pages/coordinator/OfferLetters";
 
 function App() {
   return (
@@ -33,7 +35,10 @@ function App() {
         </Route>
 
         {/* Co-ordinator routes */}
-        <Route path="/coordinator" element={<CoordinatorLayout />}></Route>
+        <Route path="/coordinator" element={<CoordinatorLayout />}>
+          <Route path="home" element={<CoordinatorDashboard />} />
+          <Route path="offerletters" element={<OfferLetters />} />
+        </Route>
 
         {/* Student routes */}
         <Route path="/student" element={<StudentLayout />}></Route>
