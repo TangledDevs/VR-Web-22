@@ -5,12 +5,14 @@ import AdminDashboard from "./components/AdminDashboard";
 import { Layout as CoordinatorLayout } from "./pages/coordinator/Layout";
 import { Layout as StudentLayout } from "./pages/student/Layout";
 import DashboardTable from "./components/DashboardTable";
+import LoginForm from "./components/LoginForm";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<LoginForm/>} />
 
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
