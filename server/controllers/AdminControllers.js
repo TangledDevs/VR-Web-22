@@ -208,7 +208,7 @@ export const addAdmin = async (req, res) => {
   req.body.password = hashedPassword;
   const newAdmin = await Admin.create(req.body);
   return res.status(StatusCodes.OK).json({
-    message: `Admin ${newAdmin.name} has been assigned the role ${newUser.role}`,
+    message: `Admin ${newAdmin.name} has been assigned the role of admin`,
     subadmins,
   });
 };

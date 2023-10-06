@@ -52,12 +52,14 @@ export default function LoginForm() {
               size="lg"
               type="email"
               label="Email"
+              required
               onChange={(e) => handleChange("email", e.target.value)}
             />
             <Input
               type="password"
               size="lg"
               label="Password"
+              required
               onChange={(e) => handleChange("password", e.target.value)}
             />
             <div className="flex gap-6">
