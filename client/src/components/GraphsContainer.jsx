@@ -88,16 +88,39 @@ const GraphsContainer = () => {
     ],
   };
 
+  const chartData = {
+    labels: uniqueCtcValues.map((ctc) => ctc + " LPA"),
+    datasets: [
+      {
+        data: ctcCounts,
+        label: "No of offerss",
+        backgroundColor: ["rgba(255, 99, 132, 0.6)"],
+        borderColor: "rgba(75, 192, 192, 1)",
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options = {
+    legend: {
+      display: true, // Set to true to display the legend
+      position: "top", // You can change the legend position (top, bottom, left, right)
+      labels: {
+        fontColor: "black", // Set the font color for legend labels
+      },
+    },
+  };
+
   return (
-    <div className="grid grid-cols-2 gap-8">
+    <div className="grid lg:grid-cols-2 gap-8">
       <section className="w-full bg-white rounded-md shadow-md p-4">
-        <Line data={lineChartData} />
+        <Line data={lineChartData} options={options} />
       </section>
       <section className="w-full bg-white rounded-md shadow-md p-4">
-        <Bar data={barChartData} />
+        <Bar data={barChartData} options={options} />
       </section>
       <section className="w-full bg-white rounded-md shadow-md p-4">
-        <Bar data={pieChartData} />
+        <Bar data={chartData} options={options} />
       </section>
     </div>
   );

@@ -1,4 +1,4 @@
-import GraphsContainer from "./GraphsContainer";
+import GraphsContainer from "../../components/GraphsContainer";
 
 const AdminDashboard = () => {
   return (

@@ -32,7 +32,7 @@ export default function NotificationsMenu() {
   return (
     <Menu>
       <MenuHandler>
-        <IconButton variant="text">
+        <IconButton variant="text" className="w-[34px]">
           <IoNotificationsOutline size={34} />
         </IconButton>
       </MenuHandler>
