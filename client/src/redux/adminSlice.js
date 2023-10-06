@@ -11,5 +11,11 @@ const initialState = {
     token : token,
     students : [],
     coordinators : [],
-    
+    student : {}
 }
+
+const adminSlice = createSlice({
+    name : "admin",
+    initialState,
+    
+})
