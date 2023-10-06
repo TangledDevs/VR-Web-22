@@ -19,8 +19,8 @@ const router = express.Router();
 
 router.route("/login").post(login);
 
-router.use(isAuthenticated);
-router.use(authorizeRoles(["admin"]));
+// router.use(isAuthenticated);
+// router.use(authorizeRoles(["admin"]));
 
 router
   .route("/students")

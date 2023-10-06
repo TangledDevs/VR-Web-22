@@ -14,10 +14,13 @@ import { useForm } from "react-hook-form";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch, useSelector } from "react-redux";
+import {  updateCoordinatorDetails } from "../../redux/adminSlice";
 
-const EditCoordinator = ({ open, handleOpen }) => {
-  const [coordinator, setCoordinator] = useState({});
-  const [department, setDepartment] = useState("");
+const EditCoordinator = ({ open, handleOpen,  }) => {
+  const dispatch = useDispatch();
+  const { coordinator } = useSelector((state) => state["admin"]);
+  const [department, setDepartment] = useState(coordinator?.department);
   const { register, handleSubmit, formState, reset, clearErrors } = useForm();
   const { errors, isSubmitSuccessful } = formState;
   const errorMessages = Object.values(errors);
@@ -25,25 +28,31 @@ const EditCoordinator = ({ open, handleOpen }) => {
     toast.error(errorMessages[0]?.message);
     clearErrors();
   }
+  const handleEdit = async (data) => {
+    data.department = department;
+    data._id = coordinator._id;
+    const response = await dispatch(updateCoordinatorDetails(data));
+    console.log(response)
+    if (response.meta.requestStatus === "fulfilled") {
+      handleOpen();
+    } else {
+      toast.error(response?.error?.data?.message);
+    }
+  };
   if (isSubmitSuccessful) {
     reset();
   }
-  useEffect(() => {
-    setCoordinator({});
-  }, []);
-  const addNewCoordinator = async (data) => {
-    data.department = department;
-    console.log(data);
-  };
+  
+  
   return (
     <Dialog open={open} handler={handleOpen} size="xs">
       <DialogHeader className="flex items-center justify-between">
-        <p>Edit details</p>
+        <p>Edit Coordinator details</p>
         <XMarkIcon className="h-5 w-5 cursor-pointer" onClick={handleOpen} />
       </DialogHeader>
       <DialogBody>
         <form
-          onSubmit={handleSubmit(addNewCoordinator)}
+          onSubmit={handleSubmit(handleEdit)}
           className="flex flex-col gap-5"
         >
           <Input
@@ -74,9 +83,9 @@ const EditCoordinator = ({ open, handleOpen }) => {
           </Select>
           <Input
             required
+            defaultValue={coordinator?.email}
             type="email"
             label="Email"
-            defaultValue={coordinator?.email}
             {...register("email", {
               required: {
                 value: true,
@@ -84,9 +93,32 @@ const EditCoordinator = ({ open, handleOpen }) => {
               },
             })}
           />
+          <Input
+            defaultValue={coordinator?.contact}
+            label="Coordinator Contact"
+            type="text"
+            required
+            {...register("contact", {
+              required: {
+                value: true,
+                message: "Coordinator contact is required !",
+              },
+              validate: {
+                isvalid: (fieldValue) => {
+                  return Number(fieldValue) || "Enter a valid contact number";
+                },
+                isValidLength: (fieldValue) => {
+                  return (
+                    fieldValue.length === 10 ||
+                    "Contact number must be 10 digits"
+                  );
+                },
+              },
+            })}
+          />
 
           <Button type="submit" className="w-fit mx-auto">
-            Edit Details
+            Update
           </Button>
         </form>
       </DialogBody>
