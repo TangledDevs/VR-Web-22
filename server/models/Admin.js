@@ -52,8 +52,8 @@ AdminSchema.methods.hashPassword = async function (password) {
 
 AdminSchema.methods.createAccessToken = async function () {
   return jwt.sign(
-    { userId: this._id, role: this.role },
-    process.env.ADMIN_SECRET_KEY,
+    { userId: this._id, role: "admin" },
+    process.env.JWT_SECRET_KEY,
     {
       expiresIn: "1d",
     }

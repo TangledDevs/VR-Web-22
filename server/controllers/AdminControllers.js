@@ -26,7 +26,7 @@ export const login = async (req, res) => {
   return res.status(StatusCodes.OK).json({
     message: "Login successful",
     accessToken: accessToken,
-    admin,
+    user: admin,
   });
 };
 
@@ -150,7 +150,7 @@ export const addCoordinator = async (req, res) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   req.body.password = hashedPassword;
   const newCoordinator = await Coordinator.create(req.body);
-  const coordinators = await Coordinator.find({isActive : true});
+  const coordinators = await Coordinator.find({ isActive: true });
   return res.status(StatusCodes.OK).json({
     message: `Coordinator ${name} details added successfully`,
     coordinators,
@@ -159,7 +159,7 @@ export const addCoordinator = async (req, res) => {
 
 export const updateCoordinatorDetails = async (req, res) => {
   const coordinatorId = req.params.coordinatorId;
-  console.log(coordinatorId)
+  console.log(coordinatorId);
   if (!coordinatorId || !mongoose.isValidObjectId(coordinatorId)) {
     throw new Error("Invalid Coordinator", StatusCodes.BAD_REQUEST);
   }
@@ -181,12 +181,12 @@ export const updateCoordinatorDetails = async (req, res) => {
 
 export const deleteCoordinator = async (req, res) => {
   const coordinatorId = req.params.coordinatorId;
-  console.log(coordinatorId)
+  console.log(coordinatorId);
   if (!coordinatorId || !mongoose.isValidObjectId(coordinatorId)) {
     throw new Error("Invalid coordinator", StatusCodes.BAD_REQUEST);
   }
   const coordinator = await Coordinator.findById(coordinatorId);
-  
+
   if (!coordinator) {
     throw new Error("Coordinator Not found", StatusCodes.NOT_FOUND);
   }
@@ -221,10 +221,10 @@ export const addAdmin = async (req, res) => {
 
 export const getAllStudents = async (req, res) => {
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -250,10 +250,10 @@ export const uploadStudents = async (req, res) => {
   }
 
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -298,10 +298,10 @@ export const addStudent = async (req, res) => {
   req.body.password = hashedPassword;
   const newStudent = await Student.create(req.body);
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -328,10 +328,10 @@ export const updateStudentDetails = async (req, res) => {
     runValidators: true,
   });
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },

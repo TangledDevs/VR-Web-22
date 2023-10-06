@@ -17,7 +17,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<LoginForm/>} />
+        <Route path="/login" element={<LoginForm />} />
 
         {/* Admin routes */}
         <Route path="/admin" element={<AdminLayout />}>
@@ -25,7 +25,7 @@ function App() {
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="students" element={<DashboardTable />} />
           <Route path="placements" element={<Placements />} />
-          <Route path="student" element={<Student />} />
+
           {/* <Route path="/companies" element={<Companies />} /> */}
           {/* <Route path="/coordinators" element={<Coordinators />} /> */}
           {/* <Route path="/reports" element={<Reports />} /> */}
@@ -36,7 +36,9 @@ function App() {
         <Route path="/coordinator" element={<CoordinatorLayout />}></Route>
 
         {/* Student routes */}
-        <Route path="/student" element={<StudentLayout />}></Route>
+        <Route path="/student" element={<StudentLayout />}>
+          <Route path="home" element={<Student />} />
+        </Route>
       </Routes>
       <ToastContainer />
     </BrowserRouter>

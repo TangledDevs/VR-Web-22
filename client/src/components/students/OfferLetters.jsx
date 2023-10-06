@@ -1,10 +1,5 @@
-import {
-  Card,
-  Typography,
-  Button,
-  CardBody,
-  Chip,
-} from "@material-tailwind/react";
+import { Card, Typography, CardBody, Chip } from "@material-tailwind/react";
+import Upload from "./Upload";
 
 const TABLE_HEAD = [
   "Company",
@@ -61,7 +56,7 @@ export default function OfferLetters() {
             <tr>
               {TABLE_HEAD.map((head, index) => (
                 <th
-                  key={head}
+                  key={index}
                   className="cursor-pointer border-y border-blue-gray-100 bg-blue-gray-50/50 p-4 transition-colors "
                 >
                   <Typography
@@ -78,7 +73,7 @@ export default function OfferLetters() {
           <tbody>
             {TABLE_ROWS.map(
               ({ company, role, placementDate, ctc, status }, index) => (
-                <tr key={name} className="even:bg-blue-gray-50/50">
+                <tr key={index} className="even:bg-blue-gray-50/50">
                   <td className="p-4">
                     <Typography
                       variant="small"
@@ -126,9 +121,7 @@ export default function OfferLetters() {
                     </div>
                   </td>
 
-                  <td className="p-4">
-                    {status === "InValid" && <Button>Upload Again</Button>}
-                  </td>
+                  <td className="p-4">{status === "InValid" && <Upload />}</td>
                 </tr>
               )
             )}

@@ -1,32 +1,35 @@
 import jwt from "jsonwebtoken";
 import { StatusCodes } from "http-status-codes";
 import ErrorHandler from "./ErrorHandler.js";
- 
+
 export const isAuthenticated = async (req, res, next) => {
-  
   const authHeader = req.headers.authorization;
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(StatusCodes.BAD_REQUEST).json({Error: "Please provide bearer token"});
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ Error: "Please provide bearer token" });
   }
   const token = authHeader.split(" ")[1];
   if (!token) {
-    return res.status(StatusCodes.UNAUTHORIZED).json({Error: "Invalid Token !"});
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ Error: "Invalid Token !" });
   }
   try {
-    const payload = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+    const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
     req.userId = payload.userId;
     req.role = payload.role;
     next();
   } catch (error) {
-      console.log(error)
-      return res.status(StatusCodes.FORBIDDEN).json({message: " Access Denied !",status : 403});
+    console.log(error);
+    return res
+      .status(StatusCodes.FORBIDDEN)
+      .json({ message: " Access Denied !", status: 403 });
   }
 };
 
-
 export const authorizeRoles = (roles) => {
   return (req, res, next) => {
-    
     if (!roles.includes(req.role)) {
       return next(
         new ErrorHandler(
