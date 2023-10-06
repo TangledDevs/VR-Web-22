@@ -16,9 +16,10 @@ import { handleCoordinatorSearch } from "../../../utils/search";
 import { departments } from "../../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCoordinators } from "../../redux/adminSlice";
+import Loading from "../Loading";
 
 export default function Coordinators() {
-  const { coordinators } = useSelector((state) => state["admin"]);
+  const { coordinators, isLoading } = useSelector((state) => state["admin"]);
   const dispatch = useDispatch();
   const [department, setDepartment] = useState("ALL");
   const [open, setOpen] = useState(false);
@@ -32,6 +33,9 @@ export default function Coordinators() {
     };
     fetchCoordinators();
   }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Card className="h-full w-full shadow-none">
       <CardHeader floated={false} shadow={false} className="rounded-none">
