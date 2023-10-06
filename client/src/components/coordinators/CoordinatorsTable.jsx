@@ -12,23 +12,26 @@ import {
   Option,
   Card,
 } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
 import { departments } from "../../constants";
 import { toast } from "react-toastify";
 import EditCoordinator from "./EditCoordinator";
 import { useState } from "react";
+import { deleteCoordinator, setCoordinator } from "../../redux/adminSlice";
 
 const TABLE_HEAD = ["Coordinator", "Email", "Contact", "Department", "Action"];
 
 const CoordinatorsTable = ({ data }) => {
+  const dispatch = useDispatch();
   const [openEdit, setOpenEdit] = useState(false);
   const handleOpenEdit = () => {
     setOpenEdit(!openEdit);
   };
   return (
     <div>
-      <Card className="shadow-none">
-        <CardBody className="overflow-auto px-4  mt-0">
-          <table className="w-full min-w-max table-auto text-left mt-10">
+      <Card className="shadow-none px-0">
+        <CardBody className="overflow-auto px-0">
+          <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
                 {TABLE_HEAD.map((head) => (
@@ -48,7 +51,7 @@ const CoordinatorsTable = ({ data }) => {
             </thead>
             <tbody>
               {data?.map(
-                ({ image, name, email, contact, department }, index) => {
+                ({ _id, image, name, email, contact, department }, index) => {
                   const isLast = index === data.length - 1;
                   const classes = isLast
                     ? "p-4"
@@ -88,7 +91,15 @@ const CoordinatorsTable = ({ data }) => {
                       </td>
                       <td className={classes}>
                         <Tooltip content="Edit">
-                          <IconButton variant="text" onClick={handleOpenEdit}>
+                          <IconButton
+                            variant="text"
+                            onClick={() => {
+                              console.log(_id);
+                              dispatch(setCoordinator({ id: _id }));
+
+                              handleOpenEdit();
+                            }}
+                          >
                             <PencilIcon className="h-4 w-4" />
                           </IconButton>
                         </Tooltip>
@@ -97,7 +108,7 @@ const CoordinatorsTable = ({ data }) => {
                             <TrashIcon
                               className="h-6 w-6 hover:text-red-500"
                               onClick={() =>
-                                toast.success("Coordinator Removed !")
+                                dispatch(deleteCoordinator({ id: _id }))
                               }
                             />
                           </IconButton>

@@ -14,7 +14,7 @@ import {
   updateStudentDetails,
   uploadPlacementResults,
   uploadStudents,
-} from "../controllers/adminControllers.js";
+} from "../controllers/AdminControllers.js";
 const router = express.Router();
 
 router.route("/login").post(login);
