@@ -67,7 +67,6 @@ const CoordinatorSchema = new mongoose.Schema(
   }
 );
 
-
 CoordinatorSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
@@ -94,6 +93,6 @@ CoordinatorSchema.methods.getResetPasswordToken = function () {
     .digest("hex");
   this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
   return resetToken;
-}; 
+};
 
 export default mongoose.model("Coordinator", CoordinatorSchema);

@@ -1,13 +1,11 @@
-import Coordinator from "../models/Coordinator";
 import { StatusCodes } from "http-status-codes";
 // import { sendMail } from "../middleware/sendEmail.js";
 // import crypto from "crypto";
 import bcrypt from "bcrypt";
-import Coordinator from "../models/Coordinator";
-import PlacementResult from "../models/PlacementResult";
-import Student from "../models/Student";
-import { uploadFile } from "../middleware/upload";
-import OfferLetter from "../models/OfferLetter";
+import PlacementResult from "../models/PlacementResult.js";
+import Student from "../models/Student.js";
+import { uploadFile } from "../middleware/upload.js";
+import OfferLetter from "../models/OfferLetter.js";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -100,7 +98,7 @@ export const getMyPlacementResults = async (req, res) => {
 export const updateProfile = async (req, res) => {
   const studentId = req.userId;
   if (!studentId || !mongoose.isValidObjectId(studentId)) {
-    throw new Error("Invalid Coordinator", StatusCodes.BAD_REQUEST);
+    throw new Error("Invalid Student Id", StatusCodes.BAD_REQUEST);
   }
   const student = await Student.findById(studentId);
   if (!student) {
@@ -140,7 +138,7 @@ export const uploadOfferLetter = async (req, res) => {
   const studentId = req.userId;
   const placementId = req.body.placementId;
   if (!studentId || !mongoose.isValidObjectId(studentId)) {
-    throw new Error("Invalid Coordinator", StatusCodes.BAD_REQUEST);
+    throw new Error("Invalid Student Id", StatusCodes.BAD_REQUEST);
   }
   const student = await Student.findById(studentId);
   if (!student) {

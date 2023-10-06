@@ -1,12 +1,11 @@
-import Coordinator from "../models/Coordinator";
 import { StatusCodes } from "http-status-codes";
 // import { sendMail } from "../middleware/sendEmail.js";
 // import crypto from "crypto";
 import bcrypt from "bcrypt";
-import Coordinator from "../models/Coordinator";
-import Admin from "../models/Admin";
-import PlacementResult from "../models/PlacementResult";
-import Student from "../models/Student";
+import Admin from "../models/Admin.js";
+import PlacementResult from "../models/PlacementResult.js";
+import Student from "../models/Student.js";
+import Coordinator from "../models/Coordinator.js";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
