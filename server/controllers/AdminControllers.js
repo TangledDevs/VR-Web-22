@@ -95,13 +95,32 @@ export const getAllPlacementResults = async (req, res) => {
   });
 };
 
+export const uploadPlacementResults = async (req, res) => {
+  if (req.file) {
+    const file = req.file.buffer;
+
+    const workbook = xlsx.read(file, { type: "buffer" });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    const placementResultsData = xlsx.utils.sheet_to_json(worksheet);
+    await PlacementResult.insertMany(placementResultsData);
+  }
+
+  const placementResults = await PlacementResult.find({}).populate("student");
+  return res.status(StatusCodes.OK).json({
+    message: "Placement Results data added successfully",
+    placementResults,
+  });
+};
+
 export const addPlacement = async (req, res) => {
   const { studentId, company, ctc, placementDate, position } = req.body;
   if (!studentId || !company || !ctc || !placementDate || !position) {
     throw new Error("Fill all details", StatusCodes.BAD_REQUEST);
   }
   const newPlacement = await PlacementResult.create(req.body);
-  const placementResults = await PlacementResult.find({});
+  const placementResults = await PlacementResult.find({}).populate("student");
   return res.status(StatusCodes.OK).json({
     message: "Placement Results data sent",
     count: placementResults.length,
@@ -209,6 +228,34 @@ export const getAllStudents = async (req, res) => {
   return res.status(StatusCodes.OK).json({
     message: "Students details sent",
     count: students.length,
+    students,
+  });
+};
+
+export const uploadStudents = async (req, res) => {
+  if (req.file) {
+    const file = req.file.buffer;
+
+    const workbook = xlsx.read(file, { type: "buffer" });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+
+    const studentsData = xlsx.utils.sheet_to_json(worksheet);
+    await Student.insertMany(studentsData);
+  }
+
+  const students = await Student.find({})
+    .populate({
+      path: "notifications",
+      options: { sort: { createdAt: -1 } },
+    })
+    .populate({
+      path: "placements",
+      options: { sort: { createdAt: -1 } },
+    });
+
+  return res.status(StatusCodes.OK).json({
+    message: "Students details added successfully",
     students,
   });
 };
