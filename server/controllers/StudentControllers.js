@@ -6,6 +6,7 @@ import PlacementResult from "../models/PlacementResult.js";
 import Student from "../models/Student.js";
 import { uploadFile } from "../middleware/upload.js";
 import OfferLetter from "../models/OfferLetter.js";
+import mongoose from "mongoose";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -24,7 +25,7 @@ export const login = async (req, res) => {
   return res.status(StatusCodes.OK).json({
     message: "Login successful",
     accessToken: accessToken,
-    student,
+    user: student,
   });
 };
 
@@ -95,6 +96,31 @@ export const getMyPlacementResults = async (req, res) => {
   });
 };
 
+export const myProfile = async (req, res) => {
+  const studentId = req.userId;
+  if (!studentId || !mongoose.isValidObjectId(studentId)) {
+    throw new Error("Invalid Student Id", StatusCodes.BAD_REQUEST);
+  }
+  const student = await Student.findById(studentId)
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
+    .populate({
+      path: "placements",
+      options: { sort: { createdAt: -1 } },
+    });
+
+  if (!student) {
+    throw new Error("student Not found", StatusCodes.NOT_FOUND);
+  }
+
+  return res.status(StatusCodes.OK).json({
+    message: "Student details sent",
+    student,
+  });
+};
+
 export const updateProfile = async (req, res) => {
   const studentId = req.userId;
   if (!studentId || !mongoose.isValidObjectId(studentId)) {
@@ -118,10 +144,10 @@ export const updateProfile = async (req, res) => {
     }
   );
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -156,10 +182,10 @@ export const uploadOfferLetter = async (req, res) => {
   });
 
   const data = await Student.findById(studentId)
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },

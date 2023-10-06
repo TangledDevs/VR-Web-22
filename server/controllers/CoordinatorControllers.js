@@ -24,7 +24,7 @@ export const login = async (req, res) => {
   return res.status(StatusCodes.OK).json({
     message: "Login successful",
     accessToken: accessToken,
-    coordinator,
+    user:coordinator,
   });
 };
 
@@ -89,10 +89,10 @@ export const getAllStudents = async (req, res) => {
   const coordinatorId = req.userId;
   const coordinator = await Coordinator.findById({ coordinatorId });
   const students = await Student.find({ department: coordinator.department })
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -114,10 +114,10 @@ export const getStudent = async (req, res) => {
   }
 
   const data = await Student.findById(studentId)
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -157,10 +157,10 @@ export const validateOfferLetter = async (req, res) => {
     }
   );
   const data = await Student.findById(studentId)
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },

@@ -40,7 +40,7 @@ const authSlice = createSlice({
     });
     builder.addCase(login.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      localStorage.setItem("user", payload.admin);
+      localStorage.setItem("user", JSON.stringify(payload.user));
       localStorage.setItem("token", payload.accessToken);
       toast.success(payload.message);
     });

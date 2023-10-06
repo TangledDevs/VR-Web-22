@@ -6,15 +6,16 @@ import { toast } from "react-toastify";
 import axios from "../api/axios";
 
 const token = localStorage.getItem("token");
-const user = localStorage.getItem("user");
+const user = JSON.parse(localStorage.getItem("user"));
+
 const initialState = {
-    user : user,
-    token : token,
-    students : [],
-    placements : [],
-    isLoading : true,
-    student : []
-}
+  user: user,
+  token: token,
+  students: [],
+  placements: [],
+  isLoading: true,
+  student: {},
+};
 
 export const getMyDeptPlacements = createAsyncThunk(
   "/api/coordinator/placements(get)",
@@ -59,11 +60,14 @@ export const getStudentDetails = createAsyncThunk(
   "/api/coordinator/students/:id(get)",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`/api/coordinator/students/:${payload.id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `/api/coordinator/students/:${payload.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       return response.data;
     } catch (error) {
@@ -79,11 +83,14 @@ export const validateOfferLetter = createAsyncThunk(
   "/api/coordinator/students/:id(post)",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`/api/coordinators/students/${payload.id}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.post(
+        `/api/coordinators/students/${payload.id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       return response.data;
     } catch (error) {
@@ -95,62 +102,60 @@ export const validateOfferLetter = createAsyncThunk(
   }
 );
 
-
-
 const coordinatorSlice = createSlice({
-    name : "coordinator",
-    initialState,
-    reducerss :[],
-    extraReducers : (builder)=>{
-        builder.addCase(getMyDeptPlacements.pending, (state) => {
-          state.isLoading = true;
-        });
-        builder.addCase(getMyDeptPlacements.fulfilled, (state, { payload }) => {
-          state.isLoading = false;
-          state.placements = payload.deptPlacements;
-          toast.success(payload.message);
-        });
-        builder.addCase(getMyDeptPlacements.rejected, (state, { payload }) => {
-          state.isLoading = false;
-          toast.error(payload.message);
-        });
-        builder.addCase(getMyStudents.pending, (state) => {
-          state.isLoading = true;
-        });
-        builder.addCase(getMyStudents.fulfilled, (state, { payload }) => {
-          state.isLoading = false;
-          state.students = payload.students;
-          toast.success(payload.message);
-        });
-        builder.addCase(getMyStudents.rejected, (state, { payload }) => {
-          state.isLoading = false;
-          toast.error(payload.message);
-        });
-        builder.addCase(getStudentDetails.pending, (state) => {
-          state.isLoading = true;
-        });
-        builder.addCase(getStudentDetails.fulfilled, (state, { payload }) => {
-          state.isLoading = false;
-          state.student = payload.data;
-          toast.success(payload.message);
-        });
-        builder.addCase(getStudentDetails.rejected, (state, { payload }) => {
-          state.isLoading = false;
-          toast.error(payload.message);
-        });
-        builder.addCase(validateOfferLetter.pending, (state) => {
-          state.isLoading = true;
-        });
-        builder.addCase(validateOfferLetter.fulfilled, (state, { payload }) => {
-          state.isLoading = false;
-          state.student = payload.data;
-          toast.success(payload.message);
-        });
-        builder.addCase(validateOfferLetter.rejected, (state, { payload }) => {
-          state.isLoading = false;
-          toast.error(payload.message);
-        });
-    }
-})
+  name: "coordinator",
+  initialState,
+  reducerss: [],
+  extraReducers: (builder) => {
+    builder.addCase(getMyDeptPlacements.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getMyDeptPlacements.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.placements = payload.deptPlacements;
+      toast.success(payload.message);
+    });
+    builder.addCase(getMyDeptPlacements.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message);
+    });
+    builder.addCase(getMyStudents.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getMyStudents.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.students = payload.students;
+      toast.success(payload.message);
+    });
+    builder.addCase(getMyStudents.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message);
+    });
+    builder.addCase(getStudentDetails.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getStudentDetails.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.student = payload.data;
+      toast.success(payload.message);
+    });
+    builder.addCase(getStudentDetails.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message);
+    });
+    builder.addCase(validateOfferLetter.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(validateOfferLetter.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.student = payload.data;
+      toast.success(payload.message);
+    });
+    builder.addCase(validateOfferLetter.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message);
+    });
+  },
+});
 
 export default coordinatorSlice.reducer;

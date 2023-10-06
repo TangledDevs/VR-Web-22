@@ -77,8 +77,8 @@ CoordinatorSchema.methods.hashPassword = async function (password) {
 
 CoordinatorSchema.methods.createAccessToken = async function () {
   return jwt.sign(
-    { userId: this._id, role: this.role },
-    process.env.COORDINATOR_SECRET_KEY,
+    { userId: this._id, role: "coordinator" },
+    process.env.JWT_SECRET_KEY,
     {
       expiresIn: "1d",
     }

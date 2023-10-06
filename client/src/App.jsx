@@ -27,7 +27,7 @@ function App() {
           <Route path="coordinators" element={<Coordinators />} />
           <Route path="students" element={<DashboardTable />} />
           <Route path="placements" element={<Placements />} />
-          <Route path="student" element={<Student />} />
+
           {/* <Route path="/companies" element={<Companies />} /> */}
           {/* <Route path="/coordinators" element={<Coordinators />} /> */}
           {/* <Route path="/reports" element={<Reports />} /> */}
@@ -41,7 +41,9 @@ function App() {
         </Route>
 
         {/* Student routes */}
-        <Route path="/student" element={<StudentLayout />}></Route>
+        <Route path="/student" element={<StudentLayout />}>
+          <Route path="home" element={<Student />} />
+        </Route>
       </Routes>
       <ToastContainer />
     </BrowserRouter>
