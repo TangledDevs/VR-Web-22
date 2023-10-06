@@ -11,7 +11,23 @@ const PlacementResultSchema = new mongoose.Schema(
       type: String,
       required: [true, "Company is required"],
     },
-    package: {
+    department : {
+      type: String,
+      enum: [
+        "CSE",
+        "IT",
+        "MECH",
+        "ECE",
+        "EEE",
+        "CIVIL",
+        "AIDS",
+        "AIML",
+        "IOT",
+        "CIC",
+      ],
+      required: [true, "Student dept is required !"],
+    },
+    ctc: {
       type: Number,
       required: [true, "Package is required "],
     },
@@ -19,16 +35,13 @@ const PlacementResultSchema = new mongoose.Schema(
       type: Date,
       required: [true, "Placement Date is required !"],
     },
-    role: {
+    position: {
       type: String,
-      required: [true, "Job role is required !"],
+      required: [true, "Job Position is required !"],
     },
     acceptanceStatus: {
       type: Boolean,
       default: true,
-    },
-    offerLetter: {
-      type: String,
     },
   },
   {

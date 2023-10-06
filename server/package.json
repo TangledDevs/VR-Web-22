@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.425.0",
     "axios": "^1.5.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -19,5 +20,5 @@
     "dev": "nodemon server.js",
     "start": "npm run start"
   },
-  "type" : "module"
+  "type": "module"
 }

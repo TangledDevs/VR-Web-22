@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import validator from "validator";
+import bcrypt from "bcrypt";
+import jwt from 'jsonwebtoken'
 
 const StudentSchema = new mongoose.Schema(
   {
@@ -75,6 +77,10 @@ const StudentSchema = new mongoose.Schema(
     address: {
       type: String,
     },
+    college:{
+      type: String,
+      default: process.env.COLLEGE,
+    },
   },
   {
     timestamps: true,
@@ -93,5 +99,38 @@ StudentSchema.virtual("placements", {
   localField: "_id",
   foreignField: "student",
 });
+StudentSchema.virtual("offerletters", {
+  ref: "OfferLetter",
+  localField: "_id",
+  foreignField: "student",
+});
+
+StudentSchema.methods.comparePassword = async function (enteredPassword) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
+
+StudentSchema.methods.hashPassword = async function (password) {
+  return await bcrypt.hashSync(password, 10);
+};
+
+StudentSchema.methods.createAccessToken = async function () {
+  return jwt.sign(
+    { userId: this._id, role: this.role },
+    process.env.STUDENT_SECRET_KEY,
+    {
+      expiresIn: "1d",
+    }
+  );
+};
+
+StudentSchema.methods.getResetPasswordToken = function () {
+  const resetToken = crypto.randomBytes(20).toString("hex");
+  this.resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  this.resetPasswordExpire = Date.now() + 15 * 60 * 1000;
+  return resetToken;
+}; 
 
 export default mongoose.model("Student", StudentSchema);
