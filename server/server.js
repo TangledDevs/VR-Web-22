@@ -24,9 +24,9 @@ export const upload = multer({
   },
 });
 
-app.use("/admin/", upload.single("bulkUpload"), adminRoutes);
-app.use("/coordinator/", coordinatorRoutes);
-app.use("/student/", upload.single("profileImage"), studentRoutes);
+app.use("/api/admin/", upload.single("bulkUpload"), adminRoutes);
+app.use("/api/coordinator/", coordinatorRoutes);
+app.use("/api/student/", upload.single("profileImage"), studentRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Team Tangled Devs " });
