@@ -21,10 +21,12 @@ const Sidebar = () => {
             <div className="text-xs">Coordinators</div>
           </div>
         </Link>
-        <div className="w-20 h-20 flex flex-col gap-[2px] items-center justify-center cursor-pointer hover:bg-blue-gray-50">
-          <PiSuitcaseSimple alt="home-icon" size={24} />
-          <div className="text-xs">Placements</div>
-        </div>
+        <Link to="placements">
+          <div className="w-20 h-20 flex flex-col gap-[2px] items-center justify-center cursor-pointer hover:bg-blue-gray-50">
+            <PiSuitcaseSimple alt="home-icon" size={24} />
+            <div className="text-xs">Placements</div>
+          </div>
+        </Link>
       </div>
     </aside>
   );

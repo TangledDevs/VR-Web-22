@@ -26,31 +26,8 @@ const CoordinatorsTable = ({ data }) => {
   };
   return (
     <div>
-      <Card>
+      <Card className="shadow-none">
         <CardBody className="overflow-auto px-4  mt-0">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <div className="w-7">
-              <Select label="Filter By Dept" value={"ALL"}>
-                <Option value={"ALL"} key={99}>
-                  {"ALL"}
-                </Option>
-                {departments.map((dept, index) => {
-                  return (
-                    <Option value={dept} key={index}>
-                      {dept}
-                    </Option>
-                  );
-                })}
-              </Select>
-            </div>
-            <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
-            </div>
-          </div>
-
           <table className="w-full min-w-max table-auto text-left mt-10">
             <thead>
               <tr>
