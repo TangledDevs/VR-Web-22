@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
   Button,
@@ -11,8 +12,26 @@ import {
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import { departments } from "../../constants";
+import { Combobox } from "@headlessui/react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const AddPlacement = ({ open, handleOpen }) => {
+  const { students } = useSelector((store) => store.admin);
+  const dispatch = useDispatch();
+  if (!students) {
+    dispatch();
+  }
+  const [query, setQuery] = useState("");
+  const [selectedPerson, setSelectedPerson] = useState("");
+
+  const filteredPeople =
+    query === ""
+      ? students
+      : students.filter((student) => {
+          return student.toLowerCase().includes(query.toLowerCase());
+        });
+
   const form = useForm();
   const { register, handleSubmit, formState, reset, clearErrors } = form;
   const { errors, isSubmitSuccessful } = formState;
@@ -24,9 +43,9 @@ const AddPlacement = ({ open, handleOpen }) => {
   if (isSubmitSuccessful) {
     reset();
   }
-  const handleAddPlacement = async(data) => {
-    console.log(data); 
-  }
+  const handleAddPlacement = async (data) => {
+    console.log(data);
+  };
   return (
     <Dialog size="xs" open={open} handler={handleOpen}>
       <DialogHeader className="flex items-center justify-between">
@@ -34,10 +53,22 @@ const AddPlacement = ({ open, handleOpen }) => {
         <XMarkIcon className="h-5 w-5 cursor-pointer" onClick={handleOpen} />
       </DialogHeader>
       <DialogBody>
-        <form className="flex flex-col gap-5" onSubmit={handleSubmit(handleAddPlacement)}>
-          <Select label="Combobox">
-            <Option>al;sdf</Option>
-          </Select>
+        <form
+          className="flex flex-col gap-5"
+          onSubmit={handleSubmit(handleAddPlacement)}
+        >
+          <Combobox value={selectedPerson} onChange={setSelectedPerson}>
+            <Combobox.Input
+              onChange={(event) => setQuery(event.target.value)}
+            />
+            <Combobox.Options>
+              {filteredPeople.map((person) => (
+                <Combobox.Option key={person} value={person}>
+                  {person}
+                </Combobox.Option>
+              ))}
+            </Combobox.Options>
+          </Combobox>
           <Input
             type="text"
             label="Company"
@@ -98,7 +129,9 @@ const AddPlacement = ({ open, handleOpen }) => {
               valueAsDate: true,
             })}
           />
-          <Button type="submit" className="w-fit mx-auto">Add Placement</Button>
+          <Button type="submit" className="w-fit mx-auto">
+            Add Placement
+          </Button>
         </form>
       </DialogBody>
       <ToastContainer />
