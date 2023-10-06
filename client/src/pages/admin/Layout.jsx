@@ -7,8 +7,8 @@ export const Layout = () => {
     <>
       <Navbar />
       <div className="pt-20">
-        <Sidebar />
-        <main className="lg:ml-24 p-4 bg-blue-gray-50">
+        <Sidebar role={"admin"} />
+        <main className="lg:ml-24 p-4">
           <Outlet />
         </main>
       </div>
