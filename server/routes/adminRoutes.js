@@ -19,8 +19,8 @@ const router = express.Router();
 
 router.route("login").post(login);
 
-router.use(isAuthenticated);
-router.use(authorizeRoles(["admin"]));
+// router.use(isAuthenticated);
+// router.use(authorizeRoles(["admin"]));
 
 router
   .route("students")
@@ -28,12 +28,13 @@ router
   .post(addStudent)
   .patch(updateStudentDetails);
 router.route("students/upload").post(uploadStudents);
+router.route("/coordinators").get(getAllCoordinators).post(addCoordinator);
+
 router
-  .route("coordinators")
-  .get(getAllCoordinators)
+  .route("/coordinators/:coordinatorId")
   .patch(updateCoordinatorDetails)
-  .delete(deleteCoordinator)
-  .post(addCoordinator);
+  .delete(deleteCoordinator);
+  
 router.route("placements").get(getAllPlacementResults).post(addPlacement);
 router.route("placements/uploadResults").post(uploadPlacementResults);
 router.route("new").post(addAdmin);

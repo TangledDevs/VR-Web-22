@@ -6,7 +6,7 @@ import Admin from "../models/Admin.js";
 import PlacementResult from "../models/PlacementResult.js";
 import Student from "../models/Student.js";
 import Coordinator from "../models/Coordinator.js";
-
+import mongoose from "mongoose";
 export const login = async (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
@@ -147,15 +147,17 @@ export const addCoordinator = async (req, res) => {
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   req.body.password = hashedPassword;
-  const coordinators = await Coordinator.find({});
+  const newCoordinator = await Coordinator.create(req.body);
+  const coordinators = await Coordinator.find({isActive : true});
   return res.status(StatusCodes.OK).json({
-    message: `Coordinator ${response.name} details added successfully`,
+    message: `Coordinator ${name} details added successfully`,
     coordinators,
   });
 };
 
 export const updateCoordinatorDetails = async (req, res) => {
   const coordinatorId = req.params.coordinatorId;
+  console.log(coordinatorId)
   if (!coordinatorId || !mongoose.isValidObjectId(coordinatorId)) {
     throw new Error("Invalid Coordinator", StatusCodes.BAD_REQUEST);
   }
@@ -177,22 +179,24 @@ export const updateCoordinatorDetails = async (req, res) => {
 
 export const deleteCoordinator = async (req, res) => {
   const coordinatorId = req.params.coordinatorId;
+  console.log(coordinatorId)
   if (!coordinatorId || !mongoose.isValidObjectId(coordinatorId)) {
     throw new Error("Invalid coordinator", StatusCodes.BAD_REQUEST);
   }
   const coordinator = await Coordinator.findById(coordinatorId);
+  
   if (!coordinator) {
     throw new Error("Coordinator Not found", StatusCodes.NOT_FOUND);
   }
-  const response = await coordinator.findByIdAndUpdate(
+  const response = await Coordinator.findByIdAndDelete(
     coordinatorId,
     { isActive: !coordinator.isActive },
     { new: true, runValidators: true }
   );
-  const coordinators = await coordinator.find({});
+  const coordinators = await Coordinator.find({});
   return res
     .status(StatusCodes.OK)
-    .json({ message: `User ${response.name} status updated`, coordinators });
+    .json({ message: `coordinator ${response.name} deleted`, coordinators });
 };
 
 export const addAdmin = async (req, res) => {

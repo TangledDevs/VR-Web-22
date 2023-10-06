@@ -10,10 +10,13 @@ import {
   Option,
 } from "@material-tailwind/react";
 import AddCoordinator from "./AddCoordinator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CoordinatorsTable from "./CoordinatorsTable";
 import { handleCoordinatorSearch } from "../../../utils/search";
 import { departments } from "../../constants";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCoordinators } from "../../redux/adminSlice";
 const TABLE_ROWS = [
   {
     image:
@@ -50,15 +53,23 @@ const TABLE_ROWS = [
 ];
 
 export default function Coordinators() {
+  const { coordinators } = useSelector((state) => state["admin"]);
+  const dispatch = useDispatch();
+  const [department, setDepartment] = useState("ALL");
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const handleOpen = () => {
     setOpen(!open);
   };
-
+  useEffect(() => {
+    const fetchCoordinators = async () => {
+      const response = await dispatch(getAllCoordinators());
+    };
+    fetchCoordinators();
+  }, []);
   return (
     <Card className="h-full w-full shadow-none">
-      <CardHeader floated={false} shadow={false} className="rounded-none px-0">
+      <CardHeader floated={false} shadow={false} className="rounded-none">
         <div className="mb-4 flex items-center justify-between gap-8">
           <div>
             <Typography variant="h5" className="text-black">
@@ -77,13 +88,15 @@ export default function Coordinators() {
           </div>
         </div>
       </CardHeader>
-      <CardBody className="px-3 shadow-none">
-        <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+      <CardBody className="shadow-none px-0">
+        <div className="flex flex-col items-center justify-between gap-4 md:flex-row px-4">
           <div className="w-7">
-            <Select label="Filter By Dept" value={"ALL"}>
-              <Option value={"ALL"} key={99}>
-                {"ALL"}
-              </Option>
+            <Select
+              label="Filter By Dept"
+              
+              onChange={(e) => setDepartment(e)}
+            >
+              
               {departments.map((dept, index) => {
                 return (
                   <Option value={dept} key={index}>
@@ -101,7 +114,9 @@ export default function Coordinators() {
             />
           </div>
         </div>
-        <CoordinatorsTable data={handleCoordinatorSearch(query, TABLE_ROWS)} />
+        <CoordinatorsTable
+          data={handleCoordinatorSearch(query, department, coordinators)}
+        />
       </CardBody>
 
       <AddCoordinator open={open} handleOpen={handleOpen} />
