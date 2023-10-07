@@ -1,4 +1,5 @@
 export const departments = [
+  "ALL",
   "CSE",
   "IT",
   "MECH",

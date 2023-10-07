@@ -11,7 +11,7 @@ const PlacementResultSchema = new mongoose.Schema(
       type: String,
       required: [true, "Company is required"],
     },
-    department : {
+    department: {
       type: String,
       enum: [
         "CSE",
@@ -40,8 +40,12 @@ const PlacementResultSchema = new mongoose.Schema(
       required: [true, "Job Position is required !"],
     },
     acceptanceStatus: {
-      type: Boolean,
-      default: true,
+      type: String,
+      enum: ["Upload Pending", "Pending", "Accepted", "Rejected"],
+      default: "Upload Pending",
+    },
+    offerLetterUrl: {
+      type: String,
     },
   },
   {

@@ -6,6 +6,8 @@ import Admin from "../models/Admin.js";
 import PlacementResult from "../models/PlacementResult.js";
 import Student from "../models/Student.js";
 import Coordinator from "../models/Coordinator.js";
+import mongoose from "mongoose";
+import xlsx from "xlsx";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -24,7 +26,7 @@ export const login = async (req, res) => {
   return res.status(StatusCodes.OK).json({
     message: "Login successful",
     accessToken: accessToken,
-    admin,
+    user: admin,
   });
 };
 
@@ -86,7 +88,10 @@ export const login = async (req, res) => {
 // };
 
 export const getAllPlacementResults = async (req, res) => {
-  const placementResults = await PlacementResult.find({});
+  const placementResults = await PlacementResult.find({}).populate({
+    path: "student",
+  });
+  console.log(placementResults);
   return res.status(StatusCodes.OK).json({
     message: "Placement Results data sent",
     count: placementResults.length,
@@ -99,11 +104,41 @@ export const uploadPlacementResults = async (req, res) => {
     const file = req.file.buffer;
 
     const workbook = xlsx.read(file, { type: "buffer" });
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
 
-    const placementResultsData = xlsx.utils.sheet_to_json(worksheet);
-    await PlacementResult.insertMany(placementResultsData);
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const startRow = 2; // Assuming data starts from the second row
+    const endRow = 10; // Adjust as needed
+    let studentIds =[];
+    for (let i = startRow; i <= endRow; i++) {
+      const cellAddressEmail = `A${i}`;
+      const cellAddressCompany = `B${i}`; // Assuming company name is in column B
+      const cellAddressDepartment = `C${i}`; // Assuming department is in column C
+      const cellAddressCTC = `D${i}`; // Assuming CTC is in column D
+      const cellAddressDate = `E${i}`; // Assuming placement date is in column E
+      const cellAddressPosition = `F${i}`; // Assuming position is in column F
+
+      const cellEmail = firstSheet[cellAddressEmail];
+
+      if (cellEmail && cellEmail.v !== undefined) {
+        const student = await Student.findOne({ email: cellEmail.v });
+
+        if (student) {
+          studentIds.push(student._id);
+
+          const placementResult = new PlacementResult({
+            student: student._id,
+            company: firstSheet[cellAddressCompany]?.v || "Default Company",
+            department:
+              firstSheet[cellAddressDepartment]?.v || "Default Department",
+            ctc: firstSheet[cellAddressCTC]?.v || 0,
+            placementDate: firstSheet[cellAddressDate]?.v || new Date(),
+            position: firstSheet[cellAddressPosition]?.v || "Default Position",
+          });
+
+          await placementResult.save();
+        }
+      }
+    }
   }
 
   const placementResults = await PlacementResult.find({}).populate("student");
@@ -114,8 +149,8 @@ export const uploadPlacementResults = async (req, res) => {
 };
 
 export const addPlacement = async (req, res) => {
-  const { studentId, company, ctc, placementDate, position } = req.body;
-  if (!studentId || !company || !ctc || !placementDate || !position) {
+  const { student, company, ctc, placementDate, position } = req.body;
+  if (!student || !company || !ctc || !placementDate || !position) {
     throw new Error("Fill all details", StatusCodes.BAD_REQUEST);
   }
   const newPlacement = await PlacementResult.create(req.body);
@@ -147,15 +182,17 @@ export const addCoordinator = async (req, res) => {
   }
   const hashedPassword = await bcrypt.hash(password, 10);
   req.body.password = hashedPassword;
-  const coordinators = await Coordinator.find({});
+  const newCoordinator = await Coordinator.create(req.body);
+  const coordinators = await Coordinator.find({ isActive: true });
   return res.status(StatusCodes.OK).json({
-    message: `Coordinator ${response.name} details added successfully`,
+    message: `Coordinator ${name} details added successfully`,
     coordinators,
   });
 };
 
 export const updateCoordinatorDetails = async (req, res) => {
   const coordinatorId = req.params.coordinatorId;
+  console.log(coordinatorId);
   if (!coordinatorId || !mongoose.isValidObjectId(coordinatorId)) {
     throw new Error("Invalid Coordinator", StatusCodes.BAD_REQUEST);
   }
@@ -177,22 +214,24 @@ export const updateCoordinatorDetails = async (req, res) => {
 
 export const deleteCoordinator = async (req, res) => {
   const coordinatorId = req.params.coordinatorId;
+  console.log(coordinatorId);
   if (!coordinatorId || !mongoose.isValidObjectId(coordinatorId)) {
     throw new Error("Invalid coordinator", StatusCodes.BAD_REQUEST);
   }
   const coordinator = await Coordinator.findById(coordinatorId);
+
   if (!coordinator) {
     throw new Error("Coordinator Not found", StatusCodes.NOT_FOUND);
   }
-  const response = await coordinator.findByIdAndUpdate(
+  const response = await Coordinator.findByIdAndDelete(
     coordinatorId,
     { isActive: !coordinator.isActive },
     { new: true, runValidators: true }
   );
-  const coordinators = await coordinator.find({});
+  const coordinators = await Coordinator.find({});
   return res
     .status(StatusCodes.OK)
-    .json({ message: `User ${response.name} status updated`, coordinators });
+    .json({ message: `coordinator ${response.name} deleted`, coordinators });
 };
 
 export const addAdmin = async (req, res) => {
@@ -208,17 +247,17 @@ export const addAdmin = async (req, res) => {
   req.body.password = hashedPassword;
   const newAdmin = await Admin.create(req.body);
   return res.status(StatusCodes.OK).json({
-    message: `Admin ${newAdmin.name} has been assigned the role ${newUser.role}`,
+    message: `Admin ${newAdmin.name} has been assigned the role of admin`,
     subadmins,
   });
 };
 
 export const getAllStudents = async (req, res) => {
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -244,10 +283,10 @@ export const uploadStudents = async (req, res) => {
   }
 
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -292,10 +331,10 @@ export const addStudent = async (req, res) => {
   req.body.password = hashedPassword;
   const newStudent = await Student.create(req.body);
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -322,10 +361,10 @@ export const updateStudentDetails = async (req, res) => {
     runValidators: true,
   });
   const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },

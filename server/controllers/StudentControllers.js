@@ -6,6 +6,7 @@ import PlacementResult from "../models/PlacementResult.js";
 import Student from "../models/Student.js";
 import { uploadFile } from "../middleware/upload.js";
 import OfferLetter from "../models/OfferLetter.js";
+import mongoose from "mongoose";
 
 export const login = async (req, res) => {
   const { email, password } = req.body;
@@ -16,15 +17,15 @@ export const login = async (req, res) => {
   if (!student) {
     throw new Error("User Not found", StatusCodes.NOT_FOUND);
   }
-  const match = await Student.comparePassword(password);
+  const match = await student.comparePassword(password);
   if (!match) {
     throw new Error("Invalid credentials", StatusCodes.UNAUTHORIZED);
   }
-  const accessToken = await Student.createAccessToken();
+  const accessToken = await student.createAccessToken();
   return res.status(StatusCodes.OK).json({
     message: "Login successful",
     accessToken: accessToken,
-    student,
+    user: student,
   });
 };
 
@@ -95,6 +96,31 @@ export const getMyPlacementResults = async (req, res) => {
   });
 };
 
+export const myProfile = async (req, res) => {
+  const studentId = req.userId;
+  if (!studentId || !mongoose.isValidObjectId(studentId)) {
+    throw new Error("Invalid Student Id", StatusCodes.BAD_REQUEST);
+  }
+  const student = await Student.findById(studentId)
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
+    .populate({
+      path: "placements",
+      options: { sort: { createdAt: -1 } },
+    });
+
+  if (!student) {
+    throw new Error("student Not found", StatusCodes.NOT_FOUND);
+  }
+
+  return res.status(StatusCodes.OK).json({
+    message: "Student details sent",
+    student,
+  });
+};
+
 export const updateProfile = async (req, res) => {
   const studentId = req.userId;
   if (!studentId || !mongoose.isValidObjectId(studentId)) {
@@ -109,7 +135,7 @@ export const updateProfile = async (req, res) => {
     const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/StudentImage/${studentId}/${req.file.originalname}`;
     student.image = imageUrl;
   }
-  const response = await student.findByIdAndUpdate(
+  const response = await Student.findByIdAndUpdate(
     studentId,
     { image: student.image },
     {
@@ -117,11 +143,11 @@ export const updateProfile = async (req, res) => {
       runValidators: true,
     }
   );
-  const students = await Student.find({})
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+  const updatedStudent = await Student.findById({studentId})
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },
@@ -129,8 +155,7 @@ export const updateProfile = async (req, res) => {
 
   return res.status(StatusCodes.OK).json({
     message: "Students details sent",
-    count: students.length,
-    students,
+    student : updatedStudent,
   });
 };
 
@@ -156,10 +181,10 @@ export const uploadOfferLetter = async (req, res) => {
   });
 
   const data = await Student.findById(studentId)
-    .populate({
-      path: "notifications",
-      options: { sort: { createdAt: -1 } },
-    })
+    // .populate({
+    //   path: "notifications",
+    //   options: { sort: { createdAt: -1 } },
+    // })
     .populate({
       path: "placements",
       options: { sort: { createdAt: -1 } },

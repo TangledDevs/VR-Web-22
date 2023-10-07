@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { Select, Option } from "@material-tailwind/react";
 
 export default function DashboardDropdown({ label, values }) {

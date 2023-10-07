@@ -9,13 +9,13 @@ import {
   Button,
   CardBody,
   Chip,
-  CardFooter,
   Avatar,
   IconButton,
   Tooltip,
 } from "@material-tailwind/react";
 import { useState } from "react";
 import AddStudent from "./students/AddStudent";
+import Upload from "./admin/Upload";
 
 const TABLE_HEAD = [
   "student",
@@ -119,9 +119,7 @@ export default function DashboardTable() {
             </Typography>
           </div>
           <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-            <Button variant="outlined" size="sm">
-              Upload Details
-            </Button>
+            <Upload />
             <Button
               className="flex items-center gap-3"
               size="sm"
@@ -289,3 +287,4 @@ export default function DashboardTable() {
     </Card>
   );
 }
+

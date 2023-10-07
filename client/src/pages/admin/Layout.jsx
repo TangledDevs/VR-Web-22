@@ -1,15 +1,27 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+
 
 export const Layout = () => {
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
+
   return (
     <>
       <Navbar />
       <div className="pt-20">
         <Sidebar role={"admin"} />
         <main className="lg:ml-24 p-4">
-          <Outlet />
+          <Outlet/>
         </main>
       </div>
     </>
