@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Landing from "./pages/Landing";
+import Landing from "./pages/landing/Landing";
 import { Layout as AdminLayout } from "./pages/admin/Layout";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import { Layout as CoordinatorLayout } from "./pages/coordinator/Layout";
