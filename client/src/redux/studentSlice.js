@@ -58,15 +58,11 @@ export const updateProfile = createAsyncThunk(
   "/api/student/profile/:id(post)",
   async (payload, { rejectWithValue }) => {
     try {
-      const response = await axios.patch(
-        `/api/student/profile`,
-        { payload },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      const response = await axios.patch(`/api/student/profile`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       return response.data;
     } catch (error) {
@@ -133,7 +129,7 @@ const studentSlice = createSlice({
     });
     builder.addCase(updateProfile.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.students = payload.students;
+      state.student = payload.student;
       toast.success(payload.message);
     });
     builder.addCase(updateProfile.rejected, (state, { payload }) => {

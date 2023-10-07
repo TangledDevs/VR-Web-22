@@ -135,7 +135,7 @@ export const updateProfile = async (req, res) => {
     const imageUrl = `https://${process.env.AWS_BUCKET_NAME}.s3.amazonaws.com/StudentImage/${studentId}/${req.file.originalname}`;
     student.image = imageUrl;
   }
-  const response = await student.findByIdAndUpdate(
+  const response = await Student.findByIdAndUpdate(
     studentId,
     { image: student.image },
     {
@@ -143,7 +143,7 @@ export const updateProfile = async (req, res) => {
       runValidators: true,
     }
   );
-  const students = await Student.find({})
+  const updatedStudent = await Student.findById({studentId})
     // .populate({
     //   path: "notifications",
     //   options: { sort: { createdAt: -1 } },
@@ -155,8 +155,7 @@ export const updateProfile = async (req, res) => {
 
   return res.status(StatusCodes.OK).json({
     message: "Students details sent",
-    count: students.length,
-    students,
+    student : updatedStudent,
   });
 };
 
