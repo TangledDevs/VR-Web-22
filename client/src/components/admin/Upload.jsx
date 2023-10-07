@@ -40,10 +40,19 @@ export default function Upload() {
       <Button onClick={handleOpen} variant="gradient">
         Upload
       </Button>
+
       <Dialog size="xs" open={open} handler={handleOpen}>
         <form action="" onSubmit={handleSubmit}>
           <DialogHeader className="text-2xl">Upload Students Data</DialogHeader>
-          <DialogBody divider>
+          <DialogBody className="space-y-2" divider>
+            <Button variant="outlined">
+              <a
+                download
+                href="https://vrweb22.s3.ap-south-1.amazonaws.com/students.xlsx"
+              >
+                Download Excel Template
+              </a>
+            </Button>
             <label className="block">
               <input
                 type="file"
