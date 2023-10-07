@@ -1,9 +1,34 @@
-import { Bar, Line } from "react-chartjs-2";
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable no-unused-vars */
+import { Bar, Line, Pie } from "react-chartjs-2";
 import Chart from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 import { data } from "../../utils/data";
+import React, { useState, useEffect } from "react";
+import { Option, Select } from "@material-tailwind/react";
 
 const GraphsContainer = () => {
+  const [filteredData, setFilteredData] = useState(data);
+  const [selectedYear, setSelectedYear] = useState(null);
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
+
+  useEffect(() => {
+    let filtered = data;
+    if (selectedYear) {
+      filtered = filtered.filter(
+        (placement) => placement.year_of_passing == selectedYear
+      );
+    }
+    console.log(filtered.length);
+    if (selectedDepartment) {
+      filtered = filtered.filter(
+        (placement) => placement.department === selectedDepartment
+      );
+    }
+    console.log(filtered.length);
+    setFilteredData(filtered);
+    console.log(filtered.length);
+  }, [selectedYear, selectedDepartment]);
+
   const dataByYear = data.reduce((accumulator, student) => {
     const year = student.year_of_passing;
 
@@ -32,8 +57,8 @@ const GraphsContainer = () => {
     ],
   };
 
-  const dataByCompany = data.reduce((accumulator, student) => {
-    const companyName = student.company_name;
+  const dataByCompany = filteredData.reduce((accumulator, placement) => {
+    const companyName = placement.company_name;
 
     if (!accumulator[companyName]) {
       accumulator[companyName] = 0;
@@ -45,7 +70,7 @@ const GraphsContainer = () => {
   }, {});
 
   const companyNames = Object.keys(dataByCompany);
-  const numberOfPlacementsByCompany = companyNames.map(
+  const placementCounts = companyNames.map(
     (companyName) => dataByCompany[companyName]
   );
 
@@ -54,7 +79,7 @@ const GraphsContainer = () => {
     datasets: [
       {
         label: "Number of Placements",
-        data: numberOfPlacementsByCompany,
+        data: companyNames,
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -71,11 +96,55 @@ const GraphsContainer = () => {
     (ctc) => ctcValues.filter((value) => value === ctc).length
   );
 
+  const dataByDepartment = data.reduce((accumulator, student) => {
+    const department = student.department;
+
+    if (!accumulator[department]) {
+      accumulator[department] = 0;
+    }
+
+    accumulator[department] += 1;
+
+    return accumulator;
+  }, {});
+
+  const departmentNames = Object.keys(dataByDepartment);
+  const numberOfPlacementsByDepartment = departmentNames.map(
+    (department) => dataByDepartment[department]
+  );
+
+  const options = {
+    plugins: {
+      legend: {
+        display: true, // Set to true to display the legend
+        position: "right", // You can change the legend position (top, bottom, left, right)
+        labels: {
+          fontColor: "black", // Set the font color for legend labels
+        },
+      },
+      title: {
+        display: true,
+        text: "No of placements department wise",
+      },
+      datalabels: {
+        // Enable datalabels plugin
+        color: "black", // Font color for labels
+        formatter: (value) => value, // Display the value as label
+        align: "center",
+        // backgroundColor: "#ccc",
+        borderRadius: 3,
+        font: {
+          size: 18,
+        },
+      },
+    },
+  };
+
   const pieChartData = {
-    labels: uniqueCtcValues.map((ctc) => ctc + " LPA"),
+    labels: companyNames,
     datasets: [
       {
-        data: ctcCounts,
+        data: placementCounts,
         backgroundColor: [
           "rgba(255, 99, 132, 0.6)",
           "rgba(54, 162, 235, 0.6)",
@@ -83,6 +152,7 @@ const GraphsContainer = () => {
           "rgba(75, 192, 192, 0.6)",
           "rgba(153, 102, 255, 0.6)",
           "rgba(255, 159, 64, 0.6)",
+          "rgba(0, 128, 0, 0.6)",
         ],
       },
     ],
@@ -93,7 +163,7 @@ const GraphsContainer = () => {
     datasets: [
       {
         data: ctcCounts,
-        label: "No of offerss",
+        label: "No of offers",
         backgroundColor: ["rgba(255, 99, 132, 0.6)"],
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 1,
@@ -101,26 +171,72 @@ const GraphsContainer = () => {
     ],
   };
 
-  const options = {
-    legend: {
-      display: true, // Set to true to display the legend
-      position: "top", // You can change the legend position (top, bottom, left, right)
-      labels: {
-        fontColor: "black", // Set the font color for legend labels
-      },
-    },
-  };
-
   return (
     <div className="grid lg:grid-cols-2 gap-8">
       <section className="w-full bg-white rounded-md shadow-md p-4">
-        <Line data={lineChartData} options={options} />
+        <Line data={lineChartData} />
       </section>
       <section className="w-full bg-white rounded-md shadow-md p-4">
-        <Bar data={barChartData} options={options} />
+        <Bar data={barChartData} />
+      </section>
+      <section className="w-full flex items-center h-full bg-white rounded-md shadow-md p-4">
+        <Bar data={chartData} />
       </section>
       <section className="w-full bg-white rounded-md shadow-md p-4">
-        <Bar data={chartData} options={options} />
+        <div className="flex w-full gap-4 mb-4">
+          <div className="flex flex-col gap-3 w-1/2">
+            <label>Filter by Year:</label>
+            <Select
+              label="Year"
+              onChange={(e) => setSelectedYear(e === "All" ? null : e)}
+            >
+              {/* <Option value="all">All</Option> */}
+              {/* Populate this with available years from placementData */}
+              {Array.from(
+                new Set(data.map((placement) => placement.year_of_passing)).add(
+                  "All"
+                )
+              )
+                .sort()
+                .map((year) => (
+                  <Option key={year} value={year}>
+                    {year}
+                  </Option>
+                ))}
+            </Select>
+          </div>
+          <div className="flex flex-col gap-3 w-1/2">
+            <label>Filter by Department:</label>
+            <Select
+              onChange={(e) => setSelectedDepartment(e === "all" ? null : e)}
+              value={selectedDepartment || "all"}
+              label="Department"
+            >
+              {/* <option value="all">All</option> */}
+              {/* Populate this with available departments from placementData */}
+              {Array.from(
+                new Set(data.map((placement) => placement.department)).add(
+                  "All"
+                )
+              )
+                .sort()
+                .map((department) => (
+                  <Option key={department} value={department}>
+                    {department}
+                  </Option>
+                ))}
+            </Select>
+          </div>
+        </div>
+        {pieChartData.labels.length > 0 ? (
+          <Pie
+            data={pieChartData}
+            options={options}
+            plugins={[ChartDataLabels]}
+          />
+        ) : (
+          <div>No data matching above filters</div>
+        )}
       </section>
     </div>
   );

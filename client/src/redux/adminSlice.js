@@ -16,6 +16,24 @@ const initialState = {
   student: {},
 };
 
+export const getAllStudents = createAsyncThunk(
+  "/api/admin/students(get)",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const resonse = await axios.get("/api/admin/students", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return resonse.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 export const getAllCoordinators = createAsyncThunk(
   "/api/admin/coordinator(get)",
   async (payload, { rejectWithValue }) => {
@@ -222,6 +240,19 @@ const adminSlice = createSlice({
     builder.addCase(getPlacements.rejected, (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload.message || "Unable to get placement details");
+    });
+
+    builder.addCase(getAllStudents.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(getAllStudents.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.students = payload.students;
+      toast.success(payload.message);
+    });
+    builder.addCase(getAllStudents.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message || "Unable to get student details");
     });
   },
 });

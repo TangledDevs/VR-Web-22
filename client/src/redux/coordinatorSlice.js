@@ -105,14 +105,14 @@ export const validateOfferLetter = createAsyncThunk(
 const coordinatorSlice = createSlice({
   name: "coordinator",
   initialState,
-  reducerss: [],
+  reducers: [],
   extraReducers: (builder) => {
     builder.addCase(getMyDeptPlacements.pending, (state) => {
       state.isLoading = true;
     });
     builder.addCase(getMyDeptPlacements.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.placements = payload.deptPlacements;
+      state.placements = payload.placements;
       toast.success(payload.message);
     });
     builder.addCase(getMyDeptPlacements.rejected, (state, { payload }) => {

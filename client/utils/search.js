@@ -11,15 +11,23 @@ export const handleCoordinatorSearch = (query, department, data) => {
   return filteredData;
 };
 
-export const handleStudentSearch = (query, data) => {
-  if (!query) {
-    return data;
+export const handleStudentSearch = (query,passoutYear, data) => {
+  let filteredData = data;
+  console.log("passoutYear",passoutYear)
+  if(Number(passoutYear))
+  {
+    filteredData = data?.filter((item)=>item.passoutYear == passoutYear);
   }
-  const filteredData = data.filter(
+  console.log(filteredData)
+  if (!query) {
+    return filteredData;
+  }
+  filteredData = filteredData?.filter(
     (item) =>
-      item.name.toLowerCase().includes(query.toLowerCase()) ||
-      item.rollNo.toLowerCase().includes(query.toLowerCase())
+      item?.name.toLowerCase().includes(query?.toLowerCase()) ||
+      item?.rollNo.toLowerCase().includes(query?.toLowerCase())
   );
+  console.log(filteredData)
   return filteredData;
 };
 
