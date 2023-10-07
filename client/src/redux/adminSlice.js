@@ -55,6 +55,27 @@ export const addCoordinator = createAsyncThunk(
   }
 );
 
+export const uploadBulkData = createAsyncThunk(
+  "/api/admin/bulkData(post)",
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const response = await axios.post(`/api/admin/students/upload`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const updateCoordinatorDetails = createAsyncThunk(
   "/api/admin/coordinator(patch)",
   async (payload, { rejectWithValue }) => {
