@@ -20,6 +20,7 @@ import { getMyStudents } from "../../redux/coordinatorSlice";
 import { getAllStudents } from "../../redux/adminSlice";
 import StudentsTable from "../StudentsTable";
 import { handleStudentSearch } from "../../../utils/search";
+import Upload from "../admin/Upload";
 
 const years = {
   label: "Passout Year",
@@ -71,9 +72,7 @@ const Students = () => {
           </div>
           {paths[1] === "admin" && (
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button variant="outlined" size="sm">
-                Upload Details
-              </Button>
+              <Upload />
               <Button
                 className="flex items-center gap-3"
                 size="sm"

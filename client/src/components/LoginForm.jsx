@@ -85,12 +85,7 @@ export default function LoginForm() {
             </div>
           </div>
 
-          <Button
-            type="submit"
-            className="mt-6 bg-blue-500"
-            fullWidth
-            disabled={isLoading}
-          >
+          <Button type="submit" className="mt-6" fullWidth disabled={isLoading}>
             Login
           </Button>
         </form>

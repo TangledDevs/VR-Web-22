@@ -13,43 +13,7 @@ const TABLE_HEAD = [
   "Action",
 ];
 
-const TABLE_ROWS = [
-  {
-    company: "Microsoft",
-    role: "Software Engineer",
-    ctc: 10,
-    status: "Valid",
-    placementDate: "15-08-2023",
-  },
-  {
-    company: "Apple",
-    role: "iOS Developer",
-    ctc: 9,
-    status: "Valid",
-    placementDate: "12-09-2023",
-  },
-  {
-    company: "Amazon",
-    role: "Cloud Architect",
-    ctc: 11,
-    status: "InValid",
-    placementDate: "18-07-2023",
-  },
-  {
-    company: "Facebook",
-    role: "Data Scientist",
-    ctc: 12,
-    status: "Valid",
-    placementDate: "05-10-2023",
-  },
-  {
-    company: "Netflix",
-    role: "Frontend Developer",
-    ctc: 8,
-    status: "InValid",
-    placementDate: "20-06-2023",
-  },
-];
+
 export default function OfferLetters() {
   const dispatch = useDispatch();
   const { placements, isLoading } = useSelector((state) => state.student);
@@ -125,16 +89,7 @@ export default function OfferLetters() {
                       {placementDate}
                     </Typography>
                   </td>
-                  <td className={"p-4 border-b border-blue-gray-50"}>
-                    <div className="w-max">
-                      <Chip
-                        variant="ghost"
-                        size="sm"
-                        value={status}
-                        color={status === "Valid" ? "green" : "red"}
-                      />
-                    </div>
-                  </td>
+                  
 
                   <td className="p-4">{status === "InValid" && <Upload />}</td>
                 </tr>

@@ -73,6 +73,27 @@ export const addCoordinator = createAsyncThunk(
   }
 );
 
+export const uploadBulkData = createAsyncThunk(
+  "/api/admin/bulkData(post)",
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const response = await axios.post(`/api/admin/students/upload`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
+
 export const updateCoordinatorDetails = createAsyncThunk(
   "/api/admin/coordinator(patch)",
   async (payload, { rejectWithValue }) => {
@@ -180,6 +201,19 @@ const adminSlice = createSlice({
       toast.success(payload.message);
     });
     builder.addCase(getAllCoordinators.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message || "Unable to get coordinator details");
+    });
+
+    builder.addCase(uploadBulkData.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(uploadBulkData.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+
+      toast.success(payload.message);
+    });
+    builder.addCase(uploadBulkData.rejected, (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload.message || "Unable to get coordinator details");
     });
