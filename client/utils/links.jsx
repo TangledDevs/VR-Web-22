@@ -1,7 +1,7 @@
 import { GrUserManager } from "react-icons/gr";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { PiStudent, PiSuitcaseSimple } from "react-icons/pi";
-
+import {ImLibreoffice} from "react-icons/im"
 export const links = {
   admin: [
     { icon: <LuLayoutDashboard size={24} />, text: "Home", href: "home" },
@@ -25,6 +25,12 @@ export const links = {
       text: "Placements",
       href: "placements",
     },
+    {
+      icon: <ImLibreoffice size={24} />,
+      text: "Offer Letters",
+      href: "offerletters",
+    },
+
   ],
   //   student: [],
 };

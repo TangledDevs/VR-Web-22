@@ -139,7 +139,7 @@ const AddStudent = ({ open, handleOpen }) => {
             })}
           </Select>
           <div className="col-span-2">
-            <Textarea
+            <Textarea 
               label="Address"
               required
               {...register("address", {

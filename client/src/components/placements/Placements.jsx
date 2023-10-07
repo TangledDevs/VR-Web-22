@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import PlacementTable from "./PlacementTable";
 import { handlePlacementSearch } from "../../../utils/search";
 import { useDispatch, useSelector } from "react-redux";
-import { getPlacements } from "../../redux/adminSlice";
+import { getAllStudents, getPlacements } from "../../redux/adminSlice";
 import Loading from "../Loading";
 import AddPlacement from "./AddPlacement";
 import { getMyDeptPlacements } from "../../redux/coordinatorSlice";
@@ -43,6 +43,7 @@ const departments = {
 export default function Placements() {
   const [query, setQuery] = useState("");
   const { pathname } = useLocation();
+  const {students} = useSelector((state)=>state["admin"]);
   const paths = pathname.split("/");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -55,8 +56,10 @@ export default function Placements() {
         await dispatch(getMyDeptPlacements());
       } else {
         await dispatch(getPlacements());
+        await dispatch(getAllStudents());
       }
     };
+
     fetchData();
   }, []);
 
@@ -125,7 +128,7 @@ export default function Placements() {
           )}
         />
       </CardBody>
-      <AddPlacement open={open} handleOpen={handleOpen} />
+      <AddPlacement open={open} handleOpen={handleOpen} students={students} />
     </Card>
   );
 }

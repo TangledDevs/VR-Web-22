@@ -139,12 +139,30 @@ export const getPlacements = createAsyncThunk(
     }
   }
 );
+
+export const addStudent = createAsyncThunk(
+  "/api/admin/students(post)",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`/api/admin/students`, payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 const adminSlice = createSlice({
   name: "admin",
   initialState,
   reducers: {
     setCoordinator: (state, { payload }) => {
-      console.log("ljksdfg");
       const coordinator = state.coordinators.find(
         (item, index) => item._id == payload.id
       );
@@ -232,6 +250,19 @@ const adminSlice = createSlice({
     builder.addCase(getAllStudents.rejected, (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload.message || "Unable to get student details");
+    });
+
+    builder.addCase(addStudent.pending, (state) => {
+      state.isLoading = false;
+    });
+
+    builder.addCase(addStudent.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.students = payload.students;
+    });
+
+    builder.addCase(addStudent.rejected, (state, { payload }) => {
+      state.isLoading = false;
     });
   },
 });

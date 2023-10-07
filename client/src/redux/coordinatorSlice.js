@@ -13,7 +13,7 @@ const initialState = {
   token: token,
   students: [],
   placements: [],
-  isLoading: true,
+  isLoading: false,
   student: {},
 };
 

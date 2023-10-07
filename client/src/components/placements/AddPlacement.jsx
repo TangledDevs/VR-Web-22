@@ -45,10 +45,7 @@ const AddPlacement = ({ open, handleOpen }) => {
     console.log(data);
   };
   useEffect(() => {
-    const getStudents = async () => {
-      await dispatch(getAllStudents());
-    };
-    getStudents();
+    
   }, []);
   return (
     <Dialog size="xs" open={open} handler={handleOpen}>
