@@ -66,7 +66,7 @@ const AddCoordinator = ({ open, handleOpen }) => {
             onChange={(e) => setDepartment(e)}
             required
           >
-            {departments.map((dept, index) => {
+            {departments.slice(1).map((dept, index) => {
               return (
                 <Option value={dept} key={index}>
                   {dept}
@@ -123,8 +123,8 @@ const AddCoordinator = ({ open, handleOpen }) => {
             Add coordinator
           </Button>
         </form>
+        <ToastContainer />
       </DialogBody>
-      <ToastContainer />
     </Dialog>
   );
 };

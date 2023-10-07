@@ -24,16 +24,16 @@ import Upload from "../admin/Upload";
 
 const years = {
   label: "Passout Year",
-  values: [2020, 2021, 2022, 2023, 2024, 2025],
+  values: ["ALL",2020, 2021, 2022, 2023, 2024, 2025],
 };
 
 const departments = {
   label: "Departments",
-  values: ["CSE", "ECE", "EEE", "MECH", "CIVIL", "IT"],
+  values: ["ALL","CSE", "ECE", "EEE", "MECH", "CIVIL", "IT"],
 };
 const Students = () => {
-  const [passoutYear, setPassoutYear] = useState("");
-  const [department, setDepartment] = useState("");
+  const [passoutYear, setPassoutYear] = useState("ALL");
+  const [department, setDepartment] = useState("ALL");
   const [query, setQuery] = useState("");
   const { pathname } = useLocation();
   const paths = pathname.split("/");
@@ -89,7 +89,7 @@ const Students = () => {
           <div className="w-72">
             <Select label={"Passout Year"} onChange={(e) => setPassoutYear(e)}>
               {years.values?.map((option, index) => (
-                <Option key={index}>{option}</Option>
+                <Option key={index} value={option}>{option}</Option>
               ))}
             </Select>
           </div>
@@ -101,7 +101,7 @@ const Students = () => {
                 onChange={(e) => setDepartment(e)}
               >
                 {departments?.values?.map((option, index) => (
-                  <Option key={index}>{option}</Option>
+                  <Option key={index} value={option}>{option}</Option>
                 ))}
               </Select>
             </div>
@@ -118,7 +118,7 @@ const Students = () => {
         {console.log(students.length)}
 
         <StudentsTable
-          data={handleStudentSearch(query, passoutYear, students)}
+          data={handleStudentSearch(query, passoutYear, students,department)}
         />
       </CardBody>
       <AddStudent open={open} handleOpen={handleOpen} />

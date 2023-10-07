@@ -104,11 +104,41 @@ export const uploadPlacementResults = async (req, res) => {
     const file = req.file.buffer;
 
     const workbook = xlsx.read(file, { type: "buffer" });
-    const sheetName = workbook.SheetNames[0];
-    const worksheet = workbook.Sheets[sheetName];
 
-    const placementResultsData = xlsx.utils.sheet_to_json(worksheet);
-    await PlacementResult.insertMany(placementResultsData);
+    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+    const startRow = 2; // Assuming data starts from the second row
+    const endRow = 10; // Adjust as needed
+    let studentIds =[];
+    for (let i = startRow; i <= endRow; i++) {
+      const cellAddressEmail = `A${i}`;
+      const cellAddressCompany = `B${i}`; // Assuming company name is in column B
+      const cellAddressDepartment = `C${i}`; // Assuming department is in column C
+      const cellAddressCTC = `D${i}`; // Assuming CTC is in column D
+      const cellAddressDate = `E${i}`; // Assuming placement date is in column E
+      const cellAddressPosition = `F${i}`; // Assuming position is in column F
+
+      const cellEmail = firstSheet[cellAddressEmail];
+
+      if (cellEmail && cellEmail.v !== undefined) {
+        const student = await Student.findOne({ email: cellEmail.v });
+
+        if (student) {
+          studentIds.push(student._id);
+
+          const placementResult = new PlacementResult({
+            student: student._id,
+            company: firstSheet[cellAddressCompany]?.v || "Default Company",
+            department:
+              firstSheet[cellAddressDepartment]?.v || "Default Department",
+            ctc: firstSheet[cellAddressCTC]?.v || 0,
+            placementDate: firstSheet[cellAddressDate]?.v || new Date(),
+            position: firstSheet[cellAddressPosition]?.v || "Default Position",
+          });
+
+          await placementResult.save();
+        }
+      }
+    }
   }
 
   const placementResults = await PlacementResult.find({}).populate("student");

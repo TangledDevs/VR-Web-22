@@ -134,46 +134,36 @@ export const getStudent = async (req, res) => {
 };
 
 export const validateOfferLetter = async (req, res) => {
-  const studentId = req.params.studentId;
-  const { offerLetterId } = req.body;
-  if (
-    !studentId ||
-    !offerLetterId ||
-    !mongoose.isValidObjectId(studentId) ||
-    !mongoose.isValidObjectId(offerLetterId)
-  ) {
-    throw new Error("Invalid Student Id or Letter Id", StatusCodes.BAD_REQUEST);
+  const { id } = req.body;
+  if (!id || !mongoose.isValidObjectId(id)) {
+    throw new Error("Invalid Id", StatusCodes.BAD_REQUEST);
   }
-  const letter = await OfferLetter.findById(offerLetterId);
-  if (!letter) {
+  const placementResult = await PlacementResult.findById(id);
+  if (!placementResult) {
     throw new Error("Student Not found", StatusCodes.NOT_FOUND);
   }
-  const response = await OfferLetter.findByIdAndUpdate(
-    offerLetterId,
-    { status: req.body.status },
+  const response = await PlacementResult.findByIdAndUpdate(
+    id,
+    { acceptanceStatus: req.body.status },
     {
       new: true,
       runValidators: true,
     }
   );
-  const data = await Student.findById(studentId)
-    // .populate({
-    //   path: "notifications",
-    //   options: { sort: { createdAt: -1 } },
-    // })
-    .populate({
-      path: "placements",
-      options: { sort: { createdAt: -1 } },
-    });
-
-  if (!data) {
+  console.log("Response : ",response)
+  const coordinatorId = req.userId;
+  const coordinator = await Coordinator.findById(coordinatorId);
+  const deptPlacements = await PlacementResult.find({
+    department: coordinator.department,
+  });
+  if (!deptPlacements) {
     return res
       .status(StatusCodes.NOT_FOUND)
-      .json({ message: "Student not found" });
+      .json({ message: "Placements not found" });
   }
   return res
     .status(StatusCodes.OK)
-    .json({ message: "Student details sent", data });
+    .json({ message: "Placements details sent", deptPlacements });
 };
 
 export const getMyDeptPlacementResults = async (req, res) => {

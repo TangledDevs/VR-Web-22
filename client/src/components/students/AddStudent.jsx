@@ -14,8 +14,11 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { departments, genders, passoutYears } from "../../constants";
+import { useDispatch } from "react-redux";
+import { addStudent } from "../../redux/adminSlice";
 
 const AddStudent = ({ open, handleOpen }) => {
+  const dispatch = useDispatch();
   const form = useForm();
   const [department, setDepartment] = useState("");
   const [passoutYear, setPassOutYear] = useState("");
@@ -31,7 +34,13 @@ const AddStudent = ({ open, handleOpen }) => {
     reset();
   }
   const handleAddStudent = async (data) => {
-    console.log(data);
+    data.department = department;
+    data.passoutYear = passoutYear;
+    data.gender = gender;
+    const response = await dispatch(addStudent(data));
+    if (response.meta.requestStatus === "fulfilled") {
+      handleOpen();
+    }
   };
   return (
     <Dialog open={open} handler={handleOpen} size="lg">
@@ -111,6 +120,18 @@ const AddStudent = ({ open, handleOpen }) => {
               },
             })}
           />
+
+          <Input
+            label="Student Password"
+            type="text"
+            required
+            {...register("password", {
+              required: {
+                value: true,
+                message: "Student Password is required !",
+              },
+            })}
+          />
           <Select label="Select Department" onChange={(e) => setDepartment(e)}>
             {departments.map((dept, index) => {
               return (
@@ -139,7 +160,7 @@ const AddStudent = ({ open, handleOpen }) => {
             })}
           </Select>
           <div className="col-span-2">
-            <Textarea 
+            <Textarea
               label="Address"
               required
               {...register("address", {

@@ -1,6 +1,16 @@
-import { Avatar, Typography } from "@material-tailwind/react";
+/* eslint-disable react/prop-types */
+import { Avatar, IconButton, Typography } from "@material-tailwind/react";
 import React from "react";
 import { formatDate } from "../../../utils/formatDate";
+import { Tooltip } from "chart.js";
+import {
+  CheckCircleIcon,
+  CheckIcon,
+  XCircleIcon,
+} from "@heroicons/react/20/solid";
+import { useDispatch, useSelector } from "react-redux";
+import { validateOfferLetter } from "../../redux/coordinatorSlice";
+import Loading from "../Loading";
 const TABLE_HEAD = [
   "student",
   "Email",
@@ -9,46 +19,17 @@ const TABLE_HEAD = [
   "Department",
   "Passout Year",
   "Placed On",
+  "File",
+  "Status",
+  "Action",
 ];
-const TABLE_ROWS = [
-  {
-    image:
-      "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    student: "John Doe",
-    rollNo: "20bq1a05p2",
-    email: "john.doe@example.com",
-    company: "ABC Corporation",
-    role: "Software Engineer",
-    department: "Engineering",
-    passoutYear: 2022,
-    placementDate: "2022-06-15",
-  },
-  {
-    image:
-      "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    student: "Jane Smith",
-    rollNo: "20bq1a05p2",
-    email: "jane.smith@example.com",
-    company: "XYZ Tech",
-    role: "Product Manager",
-    department: "Product Management",
-    passoutYear: 2021,
-    placementDate: "2021-09-20",
-  },
-  {
-    image:
-      "https://demos.creative-tim.com/test/corporate-ui-dashboard/assets/img/team-5.jpg",
-    student: "Bob Johnson",
-    rollNo: "20bq1a05p2",
-    email: "bob.johnson@example.com",
-    company: "LMN Innovations",
-    role: "Data Analyst",
-    department: "Analytics",
-    passoutYear: 2023,
-    placementDate: "2023-05-10",
-  },
-];
+
 const PlacementTable = ({ data }) => {
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state["coordinator"]);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       <table className="mt-4 w-full min-w-max table-auto text-left">
@@ -73,17 +54,17 @@ const PlacementTable = ({ data }) => {
           {data?.map(
             (
               {
+                _id,
                 student,
-
+                acceptanceStatus,
                 company,
                 position,
-                department,
-                passoutYear,
+                offerLetterUrl,
                 placementDate,
               },
               index
             ) => {
-              const isLast = index === TABLE_ROWS.length - 1;
+              const isLast = index === data.length - 1;
               const classes = isLast
                 ? "p-4"
                 : "p-4 border-b border-blue-gray-50";
@@ -141,13 +122,38 @@ const PlacementTable = ({ data }) => {
                       {formatDate(placementDate)}
                     </Typography>
                   </td>
-                  {/* <td className={classes}>
-                      <Tooltip content="Edit User">
-                        <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
-                        </IconButton>
-                      </Tooltip>
-                    </td> */}
+                  <td className={classes}>
+                    {offerLetterUrl ? (
+                      <a href={offerLetterUrl}>View</a>
+                    ) : (
+                      <p>Not Uploaded</p>
+                    )}
+                  </td>
+                  <td className={classes}>
+                    <Typography variant="small" className="font-normal">
+                      {acceptanceStatus}
+                    </Typography>
+                  </td>
+                  <td className={classes}>
+                    <div className="flex justify-between">
+                      <CheckCircleIcon
+                        className="h-8 w-8 text-green-500 cursor-pointer"
+                        onClick={() => {
+                          dispatch(
+                            validateOfferLetter({ id: _id, status: "Accepted" })
+                          );
+                        }}
+                      />
+                      <XCircleIcon
+                        className="h-8 w-8 text-red-500 cursor-pointer"
+                        onClick={() => {
+                          dispatch(
+                            validateOfferLetter({ id: _id, status: "Rejected" })
+                          );
+                        }}
+                      />
+                    </div>
+                  </td>
                 </tr>
               );
             }

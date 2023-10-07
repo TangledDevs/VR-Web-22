@@ -25,7 +25,7 @@ const StudentSchema = new mongoose.Schema(
     image: {
       type: String,
       default:
-        "https://storage.googleapis.com/file-transfer-application/studentdummy%20image.jpg",
+        "https://www.material-tailwind.com/img/face-2.jpg",
     },
     rollNo: {
       type: String,

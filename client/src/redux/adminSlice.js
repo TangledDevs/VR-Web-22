@@ -11,6 +11,7 @@ const initialState = {
   token: token,
   isLoading: true,
   students: [],
+  placements: [],
   coordinators: [],
   coordinator: {},
   student: {},
@@ -94,6 +95,30 @@ export const uploadBulkData = createAsyncThunk(
   }
 );
 
+export const uploadBulkPlacements = createAsyncThunk(
+  "/api/admin/placementsbulk(post)",
+  async (payload, { rejectWithValue }) => {
+    console.log(payload);
+    try {
+      const response = await axios.post(
+        `/api/admin/placements/uploadResults`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      if (!error?.response) {
+        throw error;
+      }
+      return rejectWithValue(error?.response?.data);
+    }
+  }
+);
 export const updateCoordinatorDetails = createAsyncThunk(
   "/api/admin/coordinator(patch)",
   async (payload, { rejectWithValue }) => {
@@ -210,10 +235,23 @@ const adminSlice = createSlice({
     });
     builder.addCase(uploadBulkData.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-
+      state.students = payload.students;
       toast.success(payload.message);
     });
     builder.addCase(uploadBulkData.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message || "Unable to get coordinator details");
+    });
+
+    builder.addCase(uploadBulkPlacements.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(uploadBulkPlacements.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+      state.placements = payload.placementResults;
+      toast.success(payload.message);
+    });
+    builder.addCase(uploadBulkPlacements.rejected, (state, { payload }) => {
       state.isLoading = false;
       toast.error(payload.message || "Unable to get coordinator details");
     });
@@ -293,6 +331,7 @@ const adminSlice = createSlice({
     builder.addCase(addStudent.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.students = payload.students;
+      toast.success("Student Added Successfully");
     });
 
     builder.addCase(addStudent.rejected, (state, { payload }) => {

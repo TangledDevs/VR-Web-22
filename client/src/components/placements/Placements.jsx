@@ -8,6 +8,8 @@ import {
   Typography,
   Button,
   CardBody,
+  Select,
+  Option,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
 import PlacementTable from "./PlacementTable";
@@ -18,15 +20,17 @@ import Loading from "../Loading";
 import AddPlacement from "./AddPlacement";
 import { getMyDeptPlacements } from "../../redux/coordinatorSlice";
 import { useLocation } from "react-router-dom";
+import PlacementUpload from "../admin/PlacementsUpload";
 
 const years = {
   label: "Passout Year",
-  values: [2020, 2021, 2022, 2023, 2024, 2025],
+  values: ["ALL", 2020, 2021, 2022, 2023, 2024, 2025],
 };
 
 const departments = {
   label: "Departments",
   values: [
+    "ALL",
     "CSE",
     "IT",
     "MECH",
@@ -43,7 +47,7 @@ const departments = {
 export default function Placements() {
   const [query, setQuery] = useState("");
   const { pathname } = useLocation();
-  const {students} = useSelector((state)=>state["admin"]);
+  const { students } = useSelector((state) => state["admin"]);
   const paths = pathname.split("/");
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -65,8 +69,8 @@ export default function Placements() {
 
   const { placements, isLoading } = useSelector((state) => state[paths[1]]);
 
-  const [passoutYear, setPassoutYear] = useState("");
-  const [department, setDepartment] = useState("");
+  const [passoutYear, setPassoutYear] = useState("ALL");
+  const [department, setDepartment] = useState("ALL");
 
   if (isLoading) {
     return <Loading />;
@@ -80,9 +84,7 @@ export default function Placements() {
               <Typography variant="h5">Campus Placement Details</Typography>
             </div>
             <div className="flex shrink-0 flex-col gap-2 sm:flex-row">
-              <Button variant="outlined" size="sm">
-                Upload Details
-              </Button>
+              <PlacementUpload />
               <Button
                 className="flex items-center gap-3"
                 size="sm"
@@ -99,15 +101,30 @@ export default function Placements() {
           </div>
         )}
       </CardHeader>
-      <CardBody className="overflow-auto px-0">
+      <CardBody className="overflow-auto px-0 min-h-[20rem]">
         <div className="flex flex-col items-center justify-between gap-4 px-4 md:flex-row">
-          <div className="w-full md:w-72 ">
-            <DashboardDropdown {...years} />
+          <div className="w-72">
+            <Select label={years.label} onChange={(e) => setPassoutYear(e)}>
+              {years.values?.map((option, index) => (
+                <Option key={index} value={option}>
+                  {option}
+                </Option>
+              ))}
+            </Select>
           </div>
 
           {paths[1] === "admin" && (
             <div className="w-full md:w-72 ">
-              <DashboardDropdown {...departments} />
+              <Select
+                label={departments.label}
+                onChange={(e) => setDepartment(e)}
+              >
+                {departments.values?.map((option, index) => (
+                  <Option key={index} value={option}>
+                    {option}
+                  </Option>
+                ))}
+              </Select>
             </div>
           )}
 
@@ -115,6 +132,7 @@ export default function Placements() {
             <Input
               label="Search"
               icon={<MagnifyingGlassIcon className="h-5 w-5" />}
+              onChange={(e) => setQuery(e.target.value)}
             />
           </div>
         </div>

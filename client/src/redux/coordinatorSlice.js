@@ -84,7 +84,8 @@ export const validateOfferLetter = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `/api/coordinators/students/${payload.id}`,
+        `/api/coordinators/placements`,
+        payload,
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -148,7 +149,7 @@ const coordinatorSlice = createSlice({
     });
     builder.addCase(validateOfferLetter.fulfilled, (state, { payload }) => {
       state.isLoading = false;
-      state.student = payload.data;
+      state.placements = payload.deptPlacements;
       toast.success(payload.message);
     });
     builder.addCase(validateOfferLetter.rejected, (state, { payload }) => {

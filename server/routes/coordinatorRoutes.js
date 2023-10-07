@@ -15,7 +15,7 @@ router.use(isAuthenticated);
 router.use(authorizeRoles(["coordinator"]));
 
 router.route("/students").get(getAllStudents);
-router.route("/students/:studentId").get(getStudent).post(validateOfferLetter);
-router.route("/placements").get(getMyDeptPlacementResults);
+router.route("/students/:studentId").get(getStudent)
+router.route("/placements").get(getMyDeptPlacementResults).post(validateOfferLetter);;
 
 export default router;

@@ -176,13 +176,13 @@ const GraphsContainer = () => {
       <section className="w-full bg-white rounded-md shadow-md p-4">
         <Line data={lineChartData} />
       </section>
-      <section className="w-full bg-white rounded-md shadow-md p-4">
+      {/* <section className="w-full bg-white rounded-md shadow-md p-4">
         <Bar data={barChartData} />
-      </section>
-      {/* <section className="w-full flex items-center h-full bg-white rounded-md shadow-md p-4">
-        <Bar data={chartData} />
       </section> */}
-      <section className="w-full col-span-2 bg-white rounded-md shadow-md p-4">
+      <section className="w-full flex items-center h-full bg-white rounded-md shadow-md p-4">
+        <Bar data={chartData} />
+      </section>
+      <section className="w-full  bg-white rounded-md shadow-md p-4">
         <div className="flex w-full gap-4 mb-4">
           <div className="flex flex-col gap-3 w-1/2">
             <label>Filter by Year:</label>
