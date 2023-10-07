@@ -187,6 +187,19 @@ const adminSlice = createSlice({
       toast.error(payload.message || "Unable to get coordinator details");
     });
 
+    builder.addCase(uploadBulkData.pending, (state) => {
+      state.isLoading = true;
+    });
+    builder.addCase(uploadBulkData.fulfilled, (state, { payload }) => {
+      state.isLoading = false;
+
+      toast.success(payload.message);
+    });
+    builder.addCase(uploadBulkData.rejected, (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload.message || "Unable to get coordinator details");
+    });
+
     builder.addCase(addCoordinator.pending, (state) => {
       state.isLoading = true;
     });
