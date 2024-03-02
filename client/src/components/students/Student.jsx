@@ -36,22 +36,22 @@ export const Student = () => {
   }, []);
   return (
     <div>
-      <h2 className="text-center font-semibold text-lg mb-5">
+      <h2 className="mb-5 text-lg font-semibold text-center">
         Student Details
       </h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
-        <div className="flex flex-col gap-y-4 justify-center items-center">
-          <img src={student?.image} className="h-60 w-60 rounded-full" />
+        <div className="flex flex-col items-center justify-center gap-y-4">
+          <img src={student?.image} className="rounded-full h-60 w-60" />
           <EditProfile />
         </div>
-        <div className="flex flex-col gap-3 justify-center">
+        <div className="flex flex-col justify-center gap-3">
           <p>Name: {student?.name}</p>
           <p>Roll No : {student?.rollNo}</p>
           <p>Email : {student?.email}</p>
           <p>Department : {student?.department}</p>
           <p>Contact : {student?.contact}</p>
         </div>
-        <div className="flex flex-col gap-3 justify-center">
+        <div className="flex flex-col justify-center gap-3">
           <p>Date of Birth : {student?.dateOfBirth}</p>
           <p>Passout Year : {student?.passoutYear}</p>
           <p>Placed : {student?.isPlaced ? "Yes" : "No"}</p>

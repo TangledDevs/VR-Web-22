@@ -22,15 +22,15 @@ const TABLE_HEAD = [
 
 export default function StudentsTable({ data }) {
   return (
-    <Card className="h-full w-full shadow-none">
-      <CardBody className="overflow-auto px-0">
-        <table className="mt-4 w-full min-w-max table-auto text-left">
+    <Card className="w-full h-full shadow-none">
+      <CardBody className="min-h-full px-0 overflow-auto">
+        <table className="w-full mt-4 text-left table-auto min-w-max">
           <thead>
             <tr>
               {TABLE_HEAD.map((head) => (
                 <th
                   key={head}
-                  className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
+                  className="p-4 border-y border-blue-gray-100 bg-blue-gray-50/50"
                 >
                   <Typography
                     variant="small"
@@ -137,7 +137,7 @@ export default function StudentsTable({ data }) {
                     <td className={classes}>
                       <Tooltip content="Edit User">
                         <IconButton variant="text">
-                          <PencilIcon className="h-4 w-4" />
+                          <PencilIcon className="w-4 h-4" />
                         </IconButton>
                       </Tooltip>
                     </td>

@@ -13,7 +13,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { departments, genders, passoutYears } from "../../constants";
+import { genders, passoutYears } from "../../constants";
 import { useDispatch } from "react-redux";
 import { addStudent } from "../../redux/adminSlice";
 
@@ -23,6 +23,7 @@ const AddStudent = ({ open, handleOpen }) => {
   const [department, setDepartment] = useState("");
   const [passoutYear, setPassOutYear] = useState("");
   const [gender, setGender] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, formState, reset, clearErrors } = form;
   const { errors, isSubmitSuccessful } = formState;
   const errorMessages = Object.values(errors);
@@ -37,21 +38,35 @@ const AddStudent = ({ open, handleOpen }) => {
     data.department = department;
     data.passoutYear = passoutYear;
     data.gender = gender;
+    setIsLoading(true);
     const response = await dispatch(addStudent(data));
     if (response.meta.requestStatus === "fulfilled") {
       handleOpen();
     }
+    setIsLoading(false);
   };
+  const departments = [
+    "CSE",
+    "IT",
+    "MECH",
+    "ECE",
+    "EEE",
+    "CIVIL",
+    "AIDS",
+    "AIML",
+    "IOT",
+    "CIC",
+  ];
   return (
     <Dialog open={open} handler={handleOpen} size="lg">
       <DialogHeader className="flex items-center justify-between">
         <p>Add new Student details</p>
-        <XMarkIcon className="h-5 w-5 cursor-pointer" onClick={handleOpen} />
+        <XMarkIcon className="w-5 h-5 cursor-pointer" onClick={handleOpen} />
       </DialogHeader>
       <DialogBody>
         <form
           onSubmit={handleSubmit(handleAddStudent)}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 "
+          className="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-2 "
         >
           <Input
             label="Student Name"
@@ -171,8 +186,8 @@ const AddStudent = ({ open, handleOpen }) => {
               })}
             />
           </div>
-          <Button type="submit" className="w-fit col-span-2 mx-auto">
-            Add Student
+          <Button type="submit" className="col-span-2 mx-auto w-fit">
+            {isLoading ? "Adding..." : "Add Student"}
           </Button>
         </form>
       </DialogBody>

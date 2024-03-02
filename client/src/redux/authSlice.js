@@ -28,10 +28,10 @@ const authSlice = createSlice({
   },
   reducers: {
     logout: () => {
-      console.log("Hello");
+      // console.log("Hello");
       localStorage.removeItem("user");
       localStorage.removeItem("token");
-      window.location.reload();
+      window.location.replace("/");
     },
   },
   extraReducers: (builder) => {
@@ -47,7 +47,7 @@ const authSlice = createSlice({
     builder.addCase(login.rejected, (state, { payload }) => {
       state.isLoading = false;
       console.log(payload);
-      toast.error(payload.message);
+      // toast.error(payload.message);
     });
   },
 });

@@ -20,12 +20,12 @@ export const handleStudentSearch = (query, passoutYear, data, department) => {
   if (passoutYear === "ALL") {
     filteredData = data;
   } else {
-    filteredData = data?.filter((item) => item.passoutYear == passoutYear);
+    filteredData = data?.filter((item) => item.passoutYear === passoutYear);
   }
   if (department) {
-    if (department != "ALL") {
+    if (department !== "ALL") {
       filteredData = filteredData?.filter(
-        (item) => item.department == department
+        (item) => item.department === department
       );
     }
   }

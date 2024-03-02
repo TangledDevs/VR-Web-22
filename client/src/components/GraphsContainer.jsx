@@ -172,19 +172,19 @@ const GraphsContainer = () => {
   };
 
   return (
-    <div className="grid lg:grid-cols-2 gap-8">
-      <section className="w-full bg-white rounded-md shadow-md p-4">
+    <div className="grid gap-8 lg:grid-cols-2">
+      <section className="w-full p-4 bg-white rounded-md shadow-md">
         <Line data={lineChartData} />
       </section>
-      {/* <section className="w-full bg-white rounded-md shadow-md p-4">
+      {/* <section className="w-full p-4 bg-white rounded-md shadow-md">
         <Bar data={barChartData} />
       </section> */}
-      <section className="w-full flex items-center h-full bg-white rounded-md shadow-md p-4">
+      <section className="flex items-center w-full h-full p-4 bg-white rounded-md shadow-md">
         <Bar data={chartData} />
       </section>
-      <section className="w-full  bg-white rounded-md shadow-md p-4">
+      <section className="w-full p-4 bg-white rounded-md shadow-md ">
         <div className="flex w-full gap-4 mb-4">
-          <div className="flex flex-col gap-3 w-1/2">
+          <div className="flex flex-col w-1/2 gap-3">
             <label>Filter by Year:</label>
             <Select
               label="Year"
@@ -205,7 +205,7 @@ const GraphsContainer = () => {
                 ))}
             </Select>
           </div>
-          <div className="flex flex-col gap-3 w-1/2">
+          <div className="flex flex-col w-1/2 gap-3">
             <label>Filter by Department:</label>
             <Select
               onChange={(e) => setSelectedDepartment(e === "All" ? null : e)}

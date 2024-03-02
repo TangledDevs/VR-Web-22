@@ -24,8 +24,7 @@ const StudentSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      default:
-        "https://www.material-tailwind.com/img/face-2.jpg",
+      default: "https://learnspace.s3.ap-south-1.amazonaws.com/male.png",
     },
     rollNo: {
       type: String,

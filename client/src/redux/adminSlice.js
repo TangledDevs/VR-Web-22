@@ -227,7 +227,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(getAllCoordinators.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to get coordinator details");
+      // toast.error(payload.message || "Unable to get coordinator details");
     });
 
     builder.addCase(uploadBulkData.pending, (state) => {
@@ -240,7 +240,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(uploadBulkData.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to get coordinator details");
+      // toast.error(payload.message || "Unable to get coordinator details");
     });
 
     builder.addCase(uploadBulkPlacements.pending, (state) => {
@@ -253,7 +253,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(uploadBulkPlacements.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to get coordinator details");
+      // toast.error(payload.message || "Unable to get coordinator details");
     });
 
     builder.addCase(addCoordinator.pending, (state) => {
@@ -266,7 +266,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(addCoordinator.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to add coordinator");
+      // toast.error(payload.message || "Unable to add coordinator");
     });
 
     builder.addCase(updateCoordinatorDetails.pending, (state) => {
@@ -282,7 +282,7 @@ const adminSlice = createSlice({
     );
     builder.addCase(updateCoordinatorDetails.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to update coordinator");
+      // toast.error(payload.message || "Unable to update coordinator");
     });
 
     builder.addCase(deleteCoordinator.pending, (state) => {
@@ -295,7 +295,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(deleteCoordinator.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to delete coordinator");
+      // toast.error(payload.message || "Unable to delete coordinator");
     });
 
     builder.addCase(getPlacements.pending, (state) => {
@@ -308,7 +308,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(getPlacements.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to get placement details");
+      // toast.error(payload.message || "Unable to get placement details");
     });
 
     builder.addCase(getAllStudents.pending, (state) => {
@@ -321,7 +321,7 @@ const adminSlice = createSlice({
     });
     builder.addCase(getAllStudents.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message || "Unable to get student details");
+      // toast.error(payload.message || "Unable to get student details");
     });
 
     builder.addCase(addStudent.pending, (state) => {

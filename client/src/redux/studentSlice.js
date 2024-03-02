@@ -122,7 +122,7 @@ const studentSlice = createSlice({
     });
     builder.addCase(getMyPlacementResults.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message);
+      // toast.error(payload.message);
     });
     builder.addCase(updateProfile.pending, (state) => {
       state.isLoading = true;
@@ -134,7 +134,7 @@ const studentSlice = createSlice({
     });
     builder.addCase(updateProfile.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message);
+      // toast.error(payload.message);
     });
     builder.addCase(uploadOfferLetter.pending, (state) => {
       state.isLoading = true;
@@ -146,7 +146,7 @@ const studentSlice = createSlice({
     });
     builder.addCase(uploadOfferLetter.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message);
+      // toast.error(payload.message);
     });
   },
 });

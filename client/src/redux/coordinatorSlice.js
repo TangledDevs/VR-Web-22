@@ -154,7 +154,7 @@ const coordinatorSlice = createSlice({
     });
     builder.addCase(validateOfferLetter.rejected, (state, { payload }) => {
       state.isLoading = false;
-      toast.error(payload.message);
+      // toast.error(payload.message);
     });
   },
 });
